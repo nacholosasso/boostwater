@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes - BoostWater</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { 500: '#0ea5e9', 900: '#0f172a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center z-10">
+                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
+            </a>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
+                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido de Preguntas Frecuentes -->
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black text-brand-900 mb-4">Preguntas Frecuentes</h1>
+                <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-10">
+                <!-- Sección 1 -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900 mb-6 flex items-center gap-2 border-b pb-2">
+                        <span>🧭</span> Sobre BoostWater y los productos
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Qué tipo de productos vende BoostWater?</h3>
+                            <p class="text-gray-600">BoostWater comercializa tecnología eléctrica para deportes acuáticos, especializada en:</p>
+                            <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1 ml-4">
+                                <li>Motores eléctricos para Kayak y Stand Up Paddle (SUP)</li>
+                                <li>Baterías impermeables</li>
+                                <li>Accesorios y repuestos compatibles</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">Todos los productos están orientados a navegación asistida, pesca deportiva, exploración y uso recreativo avanzado.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿BoostWater fabrica los productos?</h3>
+                            <p class="text-gray-600">No. BoostWater es una tienda especializada que trabaja con fabricantes internacionales líderes en propulsión eléctrica acuática, como Edge / Tedgix, ofreciendo asesoramiento local, soporte y garantía en Argentina.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Los productos son nuevos y originales?</h3>
+                            <p class="text-gray-600">Sí. Todos los productos comercializados por BoostWater son nuevos, originales y compatibles con los sistemas del fabricante, sin refurbish ni usados.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 2 -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900 mb-6 flex items-center gap-2 border-b pb-2">
+                        <span>🛶</span> Uso general y funcionamiento
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Se pueden usar para pesca deportiva?</h3>
+                            <p class="text-gray-600">Sí. Es uno de los usos más habituales. Permiten desplazamiento silencioso, mejor posicionamiento, menor cansancio y mayor tiempo en el agua.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Son ruidosos?</h3>
+                            <p class="text-gray-600">No. Los motores eléctricos son silenciosos, ideales para pesca y exploración sin perturbar el entorno.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Se pueden usar en agua salada?</h3>
+                            <p class="text-gray-600">Sí. Están diseñados para agua dulce y salada, siempre que luego del uso en el mar se realice el enjuague con agua dulce.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 3 -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900 mb-6 flex items-center gap-2 border-b pb-2">
+                        <span>🎮</span> Control remoto
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Qué pasa si el control remoto cae al agua?</h3>
+                            <p class="text-gray-600">Nada. El control remoto inalámbrico K4 es resistente al agua con certificación IP68 y está diseñado para flotar. Si cae accidentalmente al agua, flotará en la superficie para que puedas recuperarlo fácilmente.</p>
+                            <p class="text-brand-500 font-semibold mt-1">✅ Recomendación BoostWater: usar correa o leash de seguridad.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿El motor se acelera solo si pierdo el control?</h3>
+                            <p class="text-gray-600">No. El sistema no acelera de forma autónoma. Ante pérdida de señal el motor no aumenta potencia, puede detener la asistencia y el usuario siempre conserva el control manual.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿La señal se corta fácilmente?</h3>
+                            <p class="text-gray-600">No en condiciones normales. El alcance del control es suficiente para kayak y SUP. Interferencias extremas o uso fuera de lo recomendado pueden afectar la señal, pero no es habitual en uso recreativo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 4 -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900 mb-6 flex items-center gap-2 border-b pb-2">
+                        <span>🔋</span> Baterías y autonomía
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Qué pasa si la batería se queda sin carga en el agua?</h3>
+                            <p class="text-gray-600">Nada peligroso. Cuando la batería se agota el motor deja de asistir y el kayak o SUP se usa como siempre, de forma manual.</p>
+                            <p class="text-brand-500 font-semibold mt-1">✅ No quedás varado ni inmovilizado.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Las baterías se pueden mojar?</h3>
+                            <p class="text-gray-600">Sí. Las baterías originales EDGE son impermeables y están diseñadas para uso náutico.</p>
+                            <p class="text-red-500 font-semibold mt-1">⚠️ Importante: No abrir la batería, no manipular conectores fuera del sistema y secar externamente antes de guardar.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Cuánto dura la batería?</h3>
+                            <p class="text-gray-600">Depende de la capacidad de la batería, el nivel de potencia utilizado, el peso total, la corriente y el viento. El sistema es modular, por lo que podés llevar baterías adicionales.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Puedo usar baterías de otra marca?</h3>
+                            <p class="text-gray-600">No se recomienda. El uso de baterías no compatibles puede dañar el sistema, reducir el rendimiento y anular la garantía.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 5 -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900 mb-6 flex items-center gap-2 border-b pb-2">
+                        <span>⚙️</span> Motor, mantenimiento, envíos y garantía
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Qué mantenimiento necesita?</h3>
+                            <p class="text-gray-600">El motor no requiere lubricación (es cerrado y sellado). El mantenimiento básico consiste en enjuagar con agua dulce tras uso en el mar, secar antes de guardar y revisar visualmente la hélice y carcasa. ❌ No usar aceites, grasas ni aerosoles. Nunca encender fuera del agua.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Los productos están en stock y hacen envíos?</h3>
+                            <p class="text-gray-600">Algunos productos pueden estar en stock y otros se importan bajo pedido. Realizamos envíos a todo el territorio argentino. Siempre recomendamos consultar disponibilidad y plazos antes de comprar.</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">¿Los productos tienen garantía?</h3>
+                            <p class="text-gray-600">Sí. BoostWater ofrece garantía limitada de 12 meses por defectos de fabricación, alineada con la garantía del fabricante. No se aceptan devoluciones por arrepentimiento ya que muchos productos se importan bajo pedido.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caja de contacto extra -->
+            <div class="mt-16 bg-gray-50 p-6 rounded-xl text-center border border-gray-100">
+                <h3 class="text-xl font-black text-brand-900 mb-2">✅ Asesoramiento y soporte</h3>
+                <p class="text-gray-600 mb-6">Ante cualquier duda sobre compatibilidad, autonomía o uso, consultanos antes de comprar. Nuestro objetivo es que el equipo se adapte realmente a tu experiencia en el agua.</p>
+                <a href="contacto.html" class="inline-block bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md">
+                    Contactanos
+                </a>
+            </div>
+            
+        </div>
+    </main>
+
+</body>
+</html>

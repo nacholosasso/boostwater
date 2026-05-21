@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - BoostWater</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { 500: '#0ea5e9', 900: '#0f172a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar (Copiado del index.html para mantener el diseño) -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center z-10">
+                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
+            </a>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
+                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                <a href="nosotros.html" class="text-brand-500 transition-colors">Nosotros</a>
+                <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido de Nosotros -->
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-20">
+        <div class="max-w-3xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-black text-brand-900 mb-6">Nuestra Historia</h1>
+            <div class="w-24 h-1.5 bg-brand-500 mx-auto mt-4 mb-10 rounded-full"></div>
+            
+            <p class="text-lg text-gray-600 leading-relaxed mb-6 text-justify">
+                Nacimos con una sola premisa: llevar el rendimiento al siguiente nivel. Entendemos que en el agua, cada detalle cuenta...
+                <!-- Acá podés escribir todo tu texto -->
+            </p>
+            
+            <a href="index.html#catalogo" class="inline-block mt-8 bg-brand-900 hover:bg-brand-500 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+                Volver a la tienda
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

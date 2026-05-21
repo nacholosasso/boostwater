@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - BoostWater</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { 500: '#0ea5e9', 900: '#0f172a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center z-10">
+                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
+            </a>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
+                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="contacto.html" class="text-brand-500 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido de Contacto -->
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-20">
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-black text-brand-900 mb-4">Contacto</h1>
+                <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full"></div>
+                <p class="text-gray-500 mt-6 font-medium">Dejanos tu consulta y te responderemos a la brevedad.</p>
+            </div>
+
+            <form action="#" method="POST" class="space-y-6">
+                <div>
+                    <label for="nombre" class="block text-sm font-bold text-gray-700 mb-2">Nombre y Apellido</label>
+                    <input type="text" id="nombre" name="nombre" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-gray-50 focus:bg-white">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-gray-50 focus:bg-white">
+                </div>
+
+                <div>
+                    <label for="telefono" class="block text-sm font-bold text-gray-700 mb-2">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-gray-50 focus:bg-white">
+                </div>
+
+                <div>
+                    <label for="mensaje" class="block text-sm font-bold text-gray-700 mb-2">Mensaje (Opcional)</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-gray-50 focus:bg-white resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-900 hover:bg-brand-500 text-white font-bold text-lg py-4 rounded-xl transition-colors shadow-lg hover:shadow-brand-500/50 mt-4">
+                    Enviar Mensaje
+                </button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

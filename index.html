@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoostWater - Test Firebase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0f172a' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar Profesional -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo cargado de forma local -->
+            <a href="#" class="flex items-center z-10">
+                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
+            </a>
+
+            <!-- Enlaces de Navegación (Desktop) -->
+            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
+                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
+            </div>
+            
+            <button id="cart-toggle" class="relative text-gray-600 hover:text-brand-500 transition z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Portada Inmersiva) -->
+    <header class="relative w-full h-[65vh] flex items-center justify-center overflow-hidden mt-[72px]">
+        <!-- Portada cargada de forma local -->
+        <img src="./foto_principal.webp" class="absolute inset-0 w-full h-full object-cover" alt="Boostwater Hero">
+        
+        <div class="relative z-10 text-center px-4 flex flex-col items-center">
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">Equipamiento <br><span class="text-brand-500">Premium</span></h1>
+            <a href="#catalogo" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.4)]">Ver Catálogo</a>
+        </div>
+    </header>
+
+    <!-- Catálogo de Productos -->
+    <main id="catalogo" class="flex-grow container mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-brand-900 tracking-tight">Catálogo Oficial</h2>
+            <div class="w-24 h-1.5 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+        
+        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            <div class="col-span-full text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500 mx-auto mb-4"></div>
+                <p class="text-gray-500 animate-pulse font-medium">Cargando catálogo oficial...</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Overlay del Carrito -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Sidecart (Carrito lateral derecho) -->
+    <aside id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="px-6 py-5 border-b flex justify-between items-center bg-gray-50">
+            <h2 class="text-xl font-black text-brand-900 uppercase tracking-wide">Tu Carrito</h2>
+            <button id="cart-close" class="text-gray-400 hover:text-red-500 transition-colors bg-white rounded-full p-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+        
+        <div id="contenedor-carrito" class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50/50">
+        </div>
+        
+        <div class="p-6 border-t bg-white shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between items-center mb-6">
+                <span class="font-bold text-gray-500 text-lg">Total estimado:</span>
+                <span class="text-3xl font-black text-brand-900">$<span id="total-carrito">0</span></span>
+            </div>
+            <button id="btn-pagar" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 hidden">Finalizar Compra</button>
+        </div>
+    </aside>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBmG7ArDKd1yCvH55VJzn9xGgIZbWx7FMw",
+            authDomain: "boostwater-497012.firebaseapp.com",
+            projectId: "boostwater-497012",
+            storageBucket: "boostwater-497012.firebasestorage.app",
+            messagingSenderId: "490829589649",
+            appId: "1:490829589649:web:625d58e92eb65b5dd9a330"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const contenedor = document.getElementById('contenedor-productos');
+        const contenedorCarrito = document.getElementById('contenedor-carrito');
+        const totalCarritoEl = document.getElementById('total-carrito');
+        const btnPagar = document.getElementById('btn-pagar');
+        const cartCount = document.getElementById('cart-count');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        
+        const q = query(collection(db, "productos"), where("Publicado", "==", true));
+
+        // Estado del carrito: intentamos recuperarlo de LocalStorage, si no hay, creamos un array vacío
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Función para actualizar la vista del carrito
+        function renderizarCarrito() {
+            contenedorCarrito.innerHTML = '';
+            let total = 0;
+            let cantidadTotal = 0;
+
+            if (carrito.length === 0) {
+                contenedorCarrito.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">El carrito está vacío.</p>';
+                btnPagar.style.display = 'none';
+                totalCarritoEl.textContent = '0';
+                cartCount.textContent = '0';
+                return;
+            }
+
+            carrito.forEach((item, index) => {
+                total += item.precio * item.cantidad;
+                cantidadTotal += item.cantidad;
+                contenedorCarrito.insertAdjacentHTML('beforeend', `
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border shadow-sm">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-gray-800 line-clamp-1">${item.nombre}</h4>
+                            <p class="text-xs text-gray-500 mt-1">${item.cantidad} x $${item.precio}</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-bold text-brand-900 text-sm">$${item.precio * item.cantidad}</span>
+                            <button class="btn-eliminar text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-md transition" data-index="${index}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                `);
+            });
+
+            totalCarritoEl.textContent = total;
+            cartCount.textContent = cantidadTotal;
+            btnPagar.style.display = 'block'; // Mostramos el botón de pago si hay items
+            localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardamos en memoria
+        }
+
+        async function cargarProductos() {
+            try {
+                const snapshot = await getDocs(q);
+                contenedor.innerHTML = ''; 
+
+                if (snapshot.empty) {
+                    contenedor.innerHTML = '<p>No hay productos publicados en este momento.</p>';
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const producto = doc.data();
+                    const id = doc.id; // Obtenemos el ID único generado por Firestore
+                    const sinStock = producto.Stock <= 0;
+
+                    const tarjetaHTML = `
+                        <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col border border-gray-100 group">
+                            <div class="relative aspect-square overflow-hidden bg-gray-100">
+                                ${sinStock ? '<div class="absolute top-3 left-3 bg-red-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase z-10 shadow-md">Agotado</div>' : ''}
+                                <img src="${producto.Imagen}" alt="${producto.Nombre}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                ${producto.Categoria ? `<span class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">${producto.Categoria}</span>` : ''}
+                                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${producto.Nombre}</h3>
+                                ${producto.Descripcion_Corta ? `<p class="text-sm text-gray-500 mb-4 line-clamp-3">${producto.Descripcion_Corta}</p>` : ''}
+                                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-50">
+                                    <span class="text-2xl font-black text-brand-900">$${producto.Precio}</span>
+                                    ${!sinStock ? `<button class="btn-agregar bg-brand-50 hover:bg-brand-500 text-brand-500 hover:text-white p-3 rounded-xl transition-colors shadow-sm" data-id="${id}" data-nombre="${producto.Nombre}" data-precio="${producto.Precio}"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></button>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.insertAdjacentHTML('beforeend', tarjetaHTML);
+                });
+            } catch (error) {
+                console.error("Error al cargar productos:", error);
+                contenedor.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-red-500">Ocurrió un error al cargar los productos.</p></div>';
+            }
+        }
+
+        cargarProductos();
+        renderizarCarrito(); // Renderizamos el carrito apenas carga la web
+
+        // Lógica de apertura y cierre del menú lateral del carrito
+        const toggleCart = () => {
+            cartSidebar.classList.toggle('translate-x-full');
+            if (cartOverlay.classList.contains('hidden')) {
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.remove('opacity-0'), 10);
+            } else {
+                cartOverlay.classList.add('opacity-0');
+                setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+            }
+        };
+        document.getElementById('cart-toggle').addEventListener('click', toggleCart);
+        document.getElementById('cart-close').addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        // Delegación de eventos para capturar los clics en botones generados dinámicamente
+        document.addEventListener('click', (e) => {
+            // Lógica para agregar productos
+            const btnAgregar = e.target.closest('.btn-agregar');
+            if (btnAgregar) {
+                const id = btnAgregar.getAttribute('data-id');
+                const nombre = btnAgregar.getAttribute('data-nombre');
+                const precio = parseFloat(btnAgregar.getAttribute('data-precio'));
+
+                // Verificamos si el producto ya está en el carrito para sumar la cantidad
+                const index = carrito.findIndex(item => item.id === id);
+                if (index !== -1) {
+                    carrito[index].cantidad += 1;
+                } else {
+                    carrito.push({ id, nombre, precio, cantidad: 1 });
+                }
+                renderizarCarrito();
+                // Feedback visual: abrimos el carrito al agregar algo
+                if(cartSidebar.classList.contains('translate-x-full')) toggleCart();
+            }
+
+            // Lógica para eliminar productos del carrito
+            const btnEliminar = e.target.closest('.btn-eliminar');
+            if (btnEliminar) {
+                const index = btnEliminar.getAttribute('data-index');
+                carrito.splice(index, 1);
+                renderizarCarrito();
+            }
+        });
+    </script>
+</body>
+</html>

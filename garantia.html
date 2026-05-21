@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garantía - BoostWater</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { 500: '#0ea5e9', 900: '#0f172a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center z-10">
+                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
+            </a>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
+                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido de Garantía -->
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-5xl font-black text-brand-900 mb-4">Política de Devolución y Garantía</h1>
+                <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-8 text-gray-600 leading-relaxed">
+                
+                <!-- Punto 1 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">1. Alcance de la garantía</h2>
+                    <p>BoostWater ofrece una garantía limitada de 12 (doce) meses a partir de la fecha de entrega del producto, aplicable exclusivamente a defectos de fabricación y de materiales.</p>
+                    <p class="mt-2 font-semibold">La garantía aplica a:</p>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Motores eléctricos</li>
+                        <li>Baterías originales</li>
+                        <li>Accesorios originales incluidos o adquiridos por separado</li>
+                    </ul>
+                </div>
+
+                <!-- Punto 2 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">2. Qué cubre la garantía</h2>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Fallas de funcionamiento originadas por defectos de fabricación</li>
+                        <li>Componentes que no operen según las especificaciones originales del fabricante</li>
+                        <li>Problemas eléctricos o electrónicos no causados por uso indebido</li>
+                    </ul>
+                    <p class="mt-4 font-semibold">En caso de corresponder, BoostWater podrá:</p>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Reparar el producto</li>
+                        <li>Reemplazar la pieza defectuosa</li>
+                        <li>Reemplazar el producto por uno equivalente</li>
+                    </ul>
+                    <p class="mt-2 text-sm italic">*La decisión queda sujeta a evaluación técnica.</p>
+                </div>
+
+                <!-- Punto 3 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">3. Qué NO cubre la garantía</h2>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Desgaste normal por uso</li>
+                        <li>Daños por golpes, caídas, impactos o accidentes</li>
+                        <li>Daños por uso indebido, abuso o negligencia</li>
+                        <li>Alteraciones, modificaciones o reparaciones realizadas por terceros no autorizados</li>
+                        <li>Daños causados por instalación incorrecta</li>
+                        <li>Uso del producto fuera de las condiciones recomendadas por el fabricante</li>
+                        <li>Daños estéticos que no afecten el funcionamiento</li>
+                        <li>Productos utilizados para fines comerciales intensivos o competitivos</li>
+                    </ul>
+                </div>
+
+                <!-- Punto 4 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">4. Condiciones de uso obligatorias</h2>
+                    <p>Para mantener la garantía, el cliente debe:</p>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Utilizar el producto según el manual del fabricante</li>
+                        <li>No modificar ni desarmar el equipo</li>
+                        <li>Usar únicamente accesorios y baterías originales</li>
+                        <li>Realizar un uso adecuado en agua dulce o salada, respetando las recomendaciones</li>
+                    </ul>
+                    <p class="mt-2 font-bold text-brand-500">El incumplimiento de estas condiciones puede anular la garantía.</p>
+                </div>
+
+                <!-- Punto 5 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">5. Política de devoluciones</h2>
+                    <h3 class="font-bold text-gray-800 mb-2">5.1 Devoluciones por falla o defecto</h3>
+                    <p>Si el producto presenta una falla de origen dentro de los 10 días corridos desde la recepción:</p>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>El cliente deberá notificar a BoostWater</li>
+                        <li>Se coordinará la evaluación del producto</li>
+                        <li>De corresponder, se procederá a reparación o reemplazo</li>
+                    </ul>
+                </div>
+
+                <!-- Punto 6 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">6. Proceso para solicitar garantía</h2>
+                    <p>Para iniciar un reclamo por garantía, el cliente deberá contactar a BoostWater por los canales oficiales, presentar comprobante de compra, enviar fotos y/o videos del problema y esperar la evaluación técnica. Una vez aprobado el reclamo, se informará el paso a seguir.</p>
+                </div>
+
+                <!-- Punto 7 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">7. Envíos y costos asociados</h2>
+                    <ul class="list-disc list-inside mt-2 ml-2 space-y-1">
+                        <li>Los costos de envío hacia BoostWater para evaluación pueden estar a cargo del cliente.</li>
+                        <li>Si el reclamo es aprobado, BoostWater cubrirá el envío de retorno o el reemplazo.</li>
+                        <li>En casos que requieran intervención del fabricante, los tiempos pueden extenderse debido a procesos de importación.</li>
+                    </ul>
+                </div>
+
+                <!-- Punto 8 -->
+                <div>
+                    <h2 class="text-xl font-bold text-brand-900 mb-3">8. Limitación de responsabilidad</h2>
+                    <p>BoostWater no se hace responsable por daños indirectos o consecuentes, pérdidas económicas derivadas del uso del producto, ni daños a personas, embarcaciones u otros equipos derivados de un uso incorrecto. Los productos comercializados son equipos de asistencia y deben utilizarse con criterio y responsabilidad.</p>
+                </div>
+
+                <!-- Punto 9 -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-6">
+                    <h2 class="text-lg font-bold text-brand-900 mb-1">9. Aceptación de la política</h2>
+                    <p class="text-sm">La compra de cualquier producto en BoostWater implica la aceptación total de esta Política de Devolución y Garantía.</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
