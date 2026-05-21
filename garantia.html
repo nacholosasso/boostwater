@@ -19,12 +19,33 @@
             <a href="index.html" class="flex items-center z-10">
                 <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
             </a>
-            <div class="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+            <div class="hidden md:flex items-center gap-4 lg:gap-8 font-semibold text-gray-600 text-sm lg:text-base">
                 <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
-                <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a>
+                
+                <!-- Dropdown Productos -->
+                <div class="relative group">
+                    <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors flex items-center gap-1 py-2">
+                        Productos
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </a>
+                    <!-- Menú Desplegable -->
+                    <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                        <div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2">
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Todos los productos</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Motores Eléctricos</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Baterías y Cargadores</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Accesorios y Repuestos</a>
+                        </div>
+                    </div>
+                </div>
+
                 <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="preguntasfrecuentes.html" class="hover:text-brand-500 transition-colors">FAQ</a>
+                <a href="garantia.html" class="text-brand-500 transition-colors">Garantía</a>
                 <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
             </div>
+            <!-- Espaciador invisible para centrar los enlaces igual que en el index -->
+            <div class="w-8"></div>
         </div>
     </nav>
 
@@ -138,6 +159,82 @@
             </div>
         </div>
     </main>
+
+    <!-- Footer Profesional -->
+    <footer class="bg-brand-900 text-white pt-16 pb-8 mt-auto">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <!-- Marca -->
+            <div>
+                <h3 class="text-2xl font-black mb-4 tracking-tighter">BOOST<span class="text-brand-500">WATER</span></h3>
+                <p class="text-gray-400 text-sm mb-6">Equipamiento premium para potenciar tus travesías en el agua. Especialistas en propulsión eléctrica acuática.</p>
+                <a href="https://www.instagram.com/boostwater.arg/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-brand-500 transition-colors inline-flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    <span class="text-sm font-semibold">@boostwater.arg</span>
+                </a>
+            </div>
+            
+            <!-- Enlaces -->
+            <div>
+                <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a></li>
+                    <li><a href="index.html#catalogo" class="hover:text-brand-500 transition-colors">Productos</a></li>
+                    <li><a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a></li>
+                    <li><a href="preguntasfrecuentes.html" class="hover:text-brand-500 transition-colors">Preguntas Frecuentes</a></li>
+                    <li><a href="garantia.html" class="hover:text-brand-500 transition-colors">Garantía</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contacto -->
+            <div>
+                <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Contactanos</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li class="flex items-center gap-3">
+                        <span class="text-brand-500 text-xl">📞</span> +5401134519455
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-brand-500 text-xl">✉️</span> boostwater@outlook.com.ar
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pagos y Envíos -->
+            <div>
+                <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Métodos de Pago</h4>
+                <div class="flex gap-2 flex-wrap mb-6">
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">VISA</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">MASTERCARD</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">AMERICAN EXPRESS</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">NARANJA</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">CABAL</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">MAESTRO</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">TARJETA SHOPPING</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">NATIVA</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">ARGENCARD</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">DINERS CLUB</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">MERCADOPAGO</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">TRANSFERENCIA</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-[10px] tracking-wider">MODO</span>
+                </div>
+                <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Métodos de Envío</h4>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Retiro local</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Correo Argentino</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-6 mt-12 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+            <p>&copy; 2026 BoostWater. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón de WhatsApp Flotante -->
+    <a href="https://wa.me/5491134519455" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-lg hover:shadow-2xl hover:scale-110 transition-all duration-300 z-30 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.115.549 4.17 1.594 5.99L.04 24l6.125-1.609a11.94 11.94 0 005.866 1.531h.005c6.645 0 12.031-5.385 12.031-12.031S18.676 0 12.031 0zm0 21.916c-1.802 0-3.568-.485-5.118-1.403l-.367-.217-3.8.996 1.015-3.705-.238-.379A9.917 9.917 0 012.006 12.03c0-5.534 4.502-10.034 10.03-10.034 5.533 0 10.034 4.502 10.034 10.034s-4.5 10.036-10.039 10.036zm5.503-7.531c-.302-.151-1.785-.884-2.062-.986-.277-.102-.479-.151-.68.151-.202.302-.782.986-.959 1.188-.176.202-.353.227-.655.076-1.73-.865-3.088-1.921-4.223-4.041-.115-.214.113-.205.405-.591.076-.102.114-.188.151-.302.05-.152.025-.285-.013-.437-.038-.152-.68-1.64-.932-2.247-.245-.591-.494-.51-.68-.52-.176-.01-.378-.013-.58-.013-.201 0-.528.076-.805.378-.277.302-1.056 1.033-1.056 2.518 0 1.485 1.082 2.92 1.232 3.122.151.202 2.131 3.255 5.163 4.56.72.31 1.282.495 1.723.633.723.23 1.378.197 1.897.12.584-.088 1.785-.729 2.036-1.434.252-.705.252-1.309.176-1.434-.076-.126-.277-.202-.579-.353z"/>
+        </svg>
+    </a>
 
 </body>
 </html>
