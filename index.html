@@ -59,31 +59,29 @@
         </div>
     </nav>
 
-    <!-- Hero Section (Portada Inmersiva) -->
-    <header class="relative w-full h-[65vh] flex items-center justify-center overflow-hidden mt-[72px]">        <!-- Video de YouTube de fondo -->
-        <!-- Video Local de fondo -->
-        <div class="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-black">
-            <video src="./K4 Kayak Motor Strength Redefined for Superior Control.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-80"></video>
+    <!-- Hero Section (Carrusel Inmersivo) -->
+    <header class="relative w-full h-[65vh] flex items-center justify-center overflow-hidden mt-[72px]">
+        <!-- Carrusel Mixto (Video + Imágenes) 100% ancho -->
+        <div id="hero-carousel" class="absolute inset-0 w-full h-full bg-black z-0">
+            <video src="./K4 Kayak Motor Strength Redefined for Superior Control.mp4" autoplay loop muted playsinline class="hero-slide absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-1000 ease-in-out active-slide"></video>
+            <img src="./foto_principal.webp" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 1">
+            <img src="./foto_principal_2.jpg" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 2">
+            <img src="./foto_principal_3.webp" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 3">
         </div>
         
-        <div class="relative z-10 text-center px-4 flex flex-col items-center">
+        <div class="relative z-10 text-center px-4 flex flex-col items-center pointer-events-none">
             <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">Equipamiento <br><span class="text-brand-500">Premium</span></h1>
-            <a href="#catalogo" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.4)]">Ver Catálogo</a>
+            <a href="#catalogo" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.4)] pointer-events-auto">Ver Catálogo</a>
+        </div>
+
+        <!-- Controles del carrusel -->
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-3 z-20">
+            <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-100 transition-opacity" data-slide="0"></button>
+            <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="1"></button>
+            <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="2"></button>
+            <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="3"></button>
         </div>
     </header>
-
-    <!-- Sección de Video Destacado -->
-    <section class="bg-white py-24 border-t border-gray-100">
-        <div class="container mx-auto px-6 max-w-5xl text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-900 tracking-tight mb-4">Conocé la Experiencia BoostWater</h2>
-            <div class="w-24 h-1.5 bg-brand-500 mx-auto mb-12 rounded-full"></div>
-            
-            <!-- Reproductor de Video Local -->
-            <div class="relative w-full overflow-hidden rounded-3xl shadow-2xl border-8 border-gray-50 aspect-video">
-                <video src="./K4 kayak Motor-How to use.mp4" controls playsinline class="absolute inset-0 w-full h-full object-cover bg-black"></video>
-            </div>
-        </div>
-    </section>
 
     <!-- Catálogo de Productos -->
     <main id="catalogo" class="flex-grow container mx-auto px-6 py-20">
@@ -100,6 +98,14 @@
         </div>
     </main>
     
+    <!-- Sección de Innovación K5 EDGE (Debajo del Catálogo) -->
+    <section class="w-full h-[50vh] md:h-[70vh] relative overflow-hidden bg-black mt-10 border-t border-gray-800">
+        <video src="./K5 EDGE SMART DRIVE.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none"></video>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+            <h2 class="text-4xl md:text-6xl font-black text-white uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] text-center px-4">Innovación <br><span class="text-brand-500">K5 EDGE</span></h2>
+        </div>
+    </section>
+
     <!-- Overlay del Carrito -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
 
@@ -199,6 +205,40 @@
             <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.115.549 4.17 1.594 5.99L.04 24l6.125-1.609a11.94 11.94 0 005.866 1.531h.005c6.645 0 12.031-5.385 12.031-12.031S18.676 0 12.031 0zm0 21.916c-1.802 0-3.568-.485-5.118-1.403l-.367-.217-3.8.996 1.015-3.705-.238-.379A9.917 9.917 0 012.006 12.03c0-5.534 4.502-10.034 10.03-10.034 5.533 0 10.034 4.502 10.034 10.034s-4.5 10.036-10.039 10.036zm5.503-7.531c-.302-.151-1.785-.884-2.062-.986-.277-.102-.479-.151-.68.151-.202.302-.782.986-.959 1.188-.176.202-.353.227-.655.076-1.73-.865-3.088-1.921-4.223-4.041-.115-.214.113-.205.405-.591.076-.102.114-.188.151-.302.05-.152.025-.285-.013-.437-.038-.152-.68-1.64-.932-2.247-.245-.591-.494-.51-.68-.52-.176-.01-.378-.013-.58-.013-.201 0-.528.076-.805.378-.277.302-1.056 1.033-1.056 2.518 0 1.485 1.082 2.92 1.232 3.122.151.202 2.131 3.255 5.163 4.56.72.31 1.282.495 1.723.633.723.23 1.378.197 1.897.12.584-.088 1.785-.729 2.036-1.434.252-.705.252-1.309.176-1.434-.076-.126-.277-.202-.579-.353z"/>
         </svg>
     </a>
+
+    <!-- Script del Carrusel -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            if (slides.length > 0) {
+                let currentSlide = 0;
+
+                const showSlide = (index) => {
+                    slides[currentSlide].classList.remove('opacity-60', 'active-slide');
+                    slides[currentSlide].classList.add('opacity-0');
+                    dots[currentSlide].classList.remove('opacity-100');
+                    dots[currentSlide].classList.add('opacity-50');
+                    
+                    currentSlide = index;
+                    
+                    slides[currentSlide].classList.remove('opacity-0');
+                    slides[currentSlide].classList.add('opacity-60', 'active-slide');
+                    dots[currentSlide].classList.remove('opacity-50');
+                    dots[currentSlide].classList.add('opacity-100');
+                };
+
+                setInterval(() => {
+                    let next = (currentSlide + 1) % slides.length;
+                    showSlide(next);
+                }, 5000);
+
+                dots.forEach((dot, idx) => {
+                    dot.addEventListener('click', () => showSlide(idx));
+                });
+            }
+        });
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
