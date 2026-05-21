@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - BoostWater</title>
-    <meta property="og:title" content="Contacto - BoostWater">
-    <meta property="og:description" content="Contactanos para recibir asesoramiento personalizado sobre equipamiento premium para el agua.">
-    <meta property="og:image" content="https://boostwater-497012.web.app/logo.webp">
-    <meta property="og:url" content="https://boostwater-497012.web.app/">
-    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -49,25 +44,8 @@
                 <a href="garantia.html" class="hover:text-brand-500 transition-colors">Garantía</a>
                 <a href="contacto.html" class="text-brand-500 transition-colors">Contacto</a>
             </div>
-            <!-- Controles Derecha -->
-            <div class="flex items-center gap-4 z-10">
-                <!-- Espaciador invisible desktop -->
-                <div class="hidden md:block w-8"></div>
-                <!-- Botón Menú Móvil -->
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-500 transition focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex-col">
-            <a href="index.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Inicio</a>
-            <a href="index.html#catalogo" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Productos</a>
-            <a href="nosotros.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Nosotros</a>
-            <a href="preguntasfrecuentes.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">FAQ</a>
-            <a href="garantia.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Garantía</a>
-            <a href="contacto.html" class="block px-6 py-4 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Contacto</a>
+            <!-- Espaciador invisible para centrar los enlaces igual que en el index -->
+            <div class="w-8"></div>
         </div>
     </nav>
 
@@ -167,7 +145,7 @@
                 <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Métodos de Envío</h4>
                 <div class="flex gap-2 flex-wrap">
                     <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Retiro local</span>
-                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Envío a coordinar con el comprador</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Correo Argentino</span>
                 </div>
             </div>
         </div>
@@ -184,25 +162,5 @@
         </svg>
     </a>
 
-    <!-- Script Menú Móvil -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnMenu = document.getElementById('mobile-menu-btn');
-            const menuMovil = document.getElementById('mobile-menu');
-            if(btnMenu && menuMovil) {
-                btnMenu.addEventListener('click', () => {
-                    menuMovil.classList.toggle('hidden');
-                    menuMovil.classList.toggle('flex');
-                });
-                const links = menuMovil.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        menuMovil.classList.add('hidden');
-                        menuMovil.classList.remove('flex');
-                    });
-                });
-            }
-        });
-    </script>
 </body>
 </html>
