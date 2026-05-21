@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoostWater</title>
-    <meta property="og:title" content="BoostWater - Equipamiento Premium">
-    <meta property="og:description" content="Equipamiento premium para potenciar tus travesías en el agua. Especialistas en propulsión eléctrica acuática.">
-    <meta property="og:image" content="https://boostwater-497012.web.app/logo.webp">
-    <meta property="og:url" content="https://boostwater-497012.web.app/">
-    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -43,12 +38,10 @@
                     <!-- Menú Desplegable -->
                     <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                         <div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2">
-                            <a href="index.html#catalogo" data-categoria="Todos" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Todos los productos</a>
-                            <a href="index.html#catalogo" data-categoria="Motores Eléctricos" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Motores Eléctricos</a>
-                            <a href="index.html#catalogo" data-categoria="Baterías y Cargadores" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Baterías y Cargadores</a>
-                            <a href="index.html#catalogo" data-categoria="Bases y Soportes" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Bases y Soportes</a>
-                            <a href="index.html#catalogo" data-categoria="Repuestos y Accesorios" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Repuestos y Accesorios</a>
-                            <a href="index.html#catalogo" data-categoria="Seguridad y Estructura" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Seguridad y Estructura</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Todos los productos</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Motores Eléctricos</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Baterías y Cargadores</a>
+                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Accesorios y Repuestos</a>
                         </div>
                     </div>
                 </div>
@@ -59,42 +52,26 @@
                 <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
             </div>
             
-            <!-- Controles Derecha (Carrito y Menú Móvil) -->
-            <div class="flex items-center gap-4 z-10">
-                <button id="cart-toggle" class="relative text-gray-600 hover:text-brand-500 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                </button>
-                <!-- Botón Hamburguesa -->
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-500 transition focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex-col">
-            <a href="index.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Inicio</a>
-            <a href="index.html#catalogo" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Productos</a>
-            <a href="nosotros.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Nosotros</a>
-            <a href="preguntasfrecuentes.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">FAQ</a>
-            <a href="garantia.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Garantía</a>
-            <a href="contacto.html" class="block px-6 py-4 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Contacto</a>
+            <button id="cart-toggle" class="relative text-gray-600 hover:text-brand-500 transition z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section (Carrusel de 3 Imágenes) -->
+    <!-- Hero Section (Carrusel Inmersivo) -->
     <header class="relative w-full h-[65vh] flex items-center justify-center overflow-hidden mt-[72px]">
-        <!-- Carrusel de Imágenes -->
+        <!-- Carrusel Mixto (Video + Imágenes) 100% ancho -->
         <div id="hero-carousel" class="absolute inset-0 w-full h-full bg-black z-0">
-            <img src="./foto_principal.webp" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000 ease-in-out active-slide" alt="Boostwater Hero 1">
+            <video src="./K4 Kayak Motor Strength Redefined for Superior Control.mp4" autoplay loop muted playsinline class="hero-slide absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-1000 ease-in-out active-slide"></video>
+            <img src="./foto_principal.webp" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 1">
             <img src="./foto_principal_2.jpg" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 2">
             <img src="./foto_principal_3.webp" class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" alt="Boostwater Hero 3">
         </div>
         
         <div class="relative z-10 text-center px-4 flex flex-col items-center pointer-events-none">
             <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">Equipamiento <br><span class="text-brand-500">Premium</span></h1>
-            <a href="#catalogo" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.4)] pointer-events-auto">Ver Productos</a>
+            <a href="#catalogo" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.4)] pointer-events-auto">Ver Catálogo</a>
         </div>
 
         <!-- Controles del carrusel -->
@@ -102,20 +79,21 @@
             <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-100 transition-opacity" data-slide="0"></button>
             <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="1"></button>
             <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="2"></button>
+            <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 transition-opacity" data-slide="3"></button>
         </div>
     </header>
 
     <!-- Catálogo de Productos -->
     <main id="catalogo" class="flex-grow container mx-auto px-6 py-20">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold text-brand-900 tracking-tight">Productos</h2>
+            <h2 class="text-4xl font-extrabold text-brand-900 tracking-tight">Catálogo Oficial</h2>
             <div class="w-24 h-1.5 bg-brand-500 mx-auto mt-4 rounded-full"></div>
         </div>
         
         <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
             <div class="col-span-full text-center py-12">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500 mx-auto mb-4"></div>
-                <p class="text-gray-500 animate-pulse font-medium">Cargando productos...</p>
+                <p class="text-gray-500 animate-pulse font-medium">Cargando catálogo oficial...</p>
             </div>
         </div>
     </main>
@@ -211,7 +189,7 @@
                 <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Métodos de Envío</h4>
                 <div class="flex gap-2 flex-wrap">
                     <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Retiro local</span>
-                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Envío a coordinar con el comprador</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Correo Argentino</span>
                 </div>
             </div>
         </div>
@@ -237,7 +215,7 @@
                 let currentSlide = 0;
 
                 const showSlide = (index) => {
-                    slides[currentSlide].classList.remove('opacity-70', 'active-slide');
+                    slides[currentSlide].classList.remove('opacity-60', 'active-slide');
                     slides[currentSlide].classList.add('opacity-0');
                     dots[currentSlide].classList.remove('opacity-100');
                     dots[currentSlide].classList.add('opacity-50');
@@ -245,7 +223,7 @@
                     currentSlide = index;
                     
                     slides[currentSlide].classList.remove('opacity-0');
-                    slides[currentSlide].classList.add('opacity-70', 'active-slide');
+                    slides[currentSlide].classList.add('opacity-60', 'active-slide');
                     dots[currentSlide].classList.remove('opacity-50');
                     dots[currentSlide].classList.add('opacity-100');
                 };
@@ -262,97 +240,6 @@
         });
     </script>
 
-    <!-- Script del Carrusel -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.hero-slide');
-            const dots = document.querySelectorAll('.carousel-dot');
-            if (slides.length > 0) {
-                let currentSlide = 0;
-
-                const showSlide = (index) => {
-                    slides[currentSlide].classList.remove('opacity-70', 'active-slide');
-                    slides[currentSlide].classList.add('opacity-0');
-                    dots[currentSlide].classList.remove('opacity-100');
-                    dots[currentSlide].classList.add('opacity-50');
-                    
-                    currentSlide = index;
-                    
-                    slides[currentSlide].classList.remove('opacity-0');
-                    slides[currentSlide].classList.add('opacity-70', 'active-slide');
-                    dots[currentSlide].classList.remove('opacity-50');
-                    dots[currentSlide].classList.add('opacity-100');
-                };
-
-                setInterval(() => {
-                    let next = (currentSlide + 1) % slides.length;
-                    showSlide(next);
-                }, 5000);
-
-                dots.forEach((dot, idx) => {
-                    dot.addEventListener('click', () => showSlide(idx));
-                });
-            }
-        });
-    </script>
-
-    <!-- Script del Carrusel -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.hero-slide');
-            const dots = document.querySelectorAll('.carousel-dot');
-            if (slides.length > 0) {
-                let currentSlide = 0;
-
-                const showSlide = (index) => {
-                    slides[currentSlide].classList.remove('opacity-70', 'active-slide');
-                    slides[currentSlide].classList.add('opacity-0');
-                    dots[currentSlide].classList.remove('opacity-100');
-                    dots[currentSlide].classList.add('opacity-50');
-                    
-                    currentSlide = index;
-                    
-                    slides[currentSlide].classList.remove('opacity-0');
-                    slides[currentSlide].classList.add('opacity-70', 'active-slide');
-                    dots[currentSlide].classList.remove('opacity-50');
-                    dots[currentSlide].classList.add('opacity-100');
-                };
-
-                setInterval(() => {
-                    let next = (currentSlide + 1) % slides.length;
-                    showSlide(next);
-                }, 5000);
-
-                dots.forEach((dot, idx) => {
-                    dot.addEventListener('click', () => showSlide(idx));
-                });
-            }
-        });
-    </script>
-
-    <!-- Script Menú Móvil -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnMenu = document.getElementById('mobile-menu-btn');
-            const menuMovil = document.getElementById('mobile-menu');
-            if(btnMenu && menuMovil) {
-                btnMenu.addEventListener('click', () => {
-                    menuMovil.classList.toggle('hidden');
-                    menuMovil.classList.toggle('flex');
-                });
-                // Cerrar el menú al tocar un enlace (ideal para móviles)
-                const links = menuMovil.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        menuMovil.classList.add('hidden');
-                        menuMovil.classList.remove('flex');
-                    });
-                });
-            }
-        });
-    </script>
-
-    <!-- Script de Firebase y Carrito -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -376,59 +263,8 @@
         const cartCount = document.getElementById('cart-count');
         const cartSidebar = document.getElementById('cart-sidebar');
         const cartOverlay = document.getElementById('cart-overlay');
-
-        function formatPrecio(valor) {
-            return new Intl.NumberFormat('es-AR').format(valor);
-        }
         
         const q = query(collection(db, "productos"), where("Publicado", "==", true));
-        let productosCatalogo = [];
-        let categoriaSeleccionada = null;
-
-        function renderizarProductos(listaProductos) {
-            contenedor.innerHTML = '';
-            if (listaProductos.length === 0) {
-                contenedor.innerHTML = '<p class="col-span-full text-center py-12 text-gray-500">No hay productos para esta categoría.</p>';
-                return;
-            }
-
-            listaProductos.forEach((producto) => {
-                const id = producto.id;
-                const sinStock = producto.Stock <= 0;
-                const tarjetaHTML = `
-                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col border border-gray-100 group">
-                        <a href="producto.html?id=${id}" class="block relative aspect-square overflow-hidden bg-gray-100">
-                            ${sinStock ? '<div class="absolute top-3 left-3 bg-red-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase z-10 shadow-md">Agotado</div>' : ''}
-                            <img src="${producto.Imagen}" alt="${producto.Nombre}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" referrerpolicy="no-referrer">
-                        </a>
-                        <div class="p-6 flex flex-col flex-grow">
-                            ${producto.Categoria ? `<span class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">${producto.Categoria}</span>` : ''}
-                            <a href="producto.html?id=${id}">
-                                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2 hover:text-brand-500 transition-colors">${producto.Nombre}</h3>
-                            </a>
-                            ${producto.Descripcion_Corta ? `<p class="text-sm text-gray-500 mb-2 line-clamp-3">${producto.Descripcion_Corta}</p>` : ''}
-                            ${!sinStock ? `<p class="text-xs font-bold text-green-600 mb-4">Stock disponible: ${producto.Stock}</p>` : ''}
-                            <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-50">
-                                <span class="text-2xl font-black text-brand-900">$${formatPrecio(producto.Precio)}</span>
-                                ${!sinStock ? `<button class="btn-agregar bg-brand-50 hover:bg-brand-500 text-brand-500 hover:text-white p-3 rounded-xl transition-colors shadow-sm" data-id="${id}" data-nombre="${producto.Nombre}" data-precio="${producto.Precio}" data-stock="${producto.Stock}"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></button>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                contenedor.insertAdjacentHTML('beforeend', tarjetaHTML);
-            });
-        }
-
-        function aplicarFiltroCategoria(categoria) {
-            categoriaSeleccionada = categoria === 'Todos' ? null : categoria;
-            const productosFiltrados = categoriaSeleccionada ? productosCatalogo.filter(p => p.Categoria && p.Categoria.toLowerCase() === categoriaSeleccionada.toLowerCase()) : productosCatalogo;
-            renderizarProductos(productosFiltrados);
-            const filtroActivo = document.querySelectorAll('[data-categoria]');
-            filtroActivo.forEach(el => {
-                el.classList.toggle('text-brand-500', el.dataset.categoria === categoria);
-                el.classList.toggle('font-bold', el.dataset.categoria === categoria);
-            });
-        }
 
         // Estado del carrito: intentamos recuperarlo de LocalStorage, si no hay, creamos un array vacío
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -438,7 +274,6 @@
             contenedorCarrito.innerHTML = '';
             let total = 0;
             let cantidadTotal = 0;
-            let totalEnvio = 0;
 
             if (carrito.length === 0) {
                 contenedorCarrito.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">El carrito está vacío.</p>';
@@ -451,28 +286,14 @@
             carrito.forEach((item, index) => {
                 total += item.precio * item.cantidad;
                 cantidadTotal += item.cantidad;
-                if (item.envio && item.envio.costo) totalEnvio += item.envio.costo;
-                
-                const envioInfo = item.envio ? 
-                    (item.envio.tipo === 'retiro'
-                        ? '🏪 Retiro local (Gratis)'
-                        : item.envio.tipo === 'coordinar'
-                            ? '🚚 Envío a coordinar con el comprador'
-                            : `📦 Envío ($${formatPrecio(item.envio.costo)})`)
-                    : '';
-                
                 contenedorCarrito.insertAdjacentHTML('beforeend', `
-                    <div class="flex justify-between items-start bg-white p-3 rounded-lg border shadow-sm">
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border shadow-sm">
                         <div class="flex-1">
                             <h4 class="text-sm font-semibold text-gray-800 line-clamp-1">${item.nombre}</h4>
-                            <p class="text-xs text-gray-500 mt-1">${item.cantidad} x $${formatPrecio(item.precio)}</p>
-                            ${envioInfo ? `<p class="text-xs text-brand-500 font-semibold mt-1">${envioInfo}</p>` : ''}
+                            <p class="text-xs text-gray-500 mt-1">${item.cantidad} x $${item.precio}</p>
                         </div>
                         <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <span class="font-bold text-brand-900 text-sm">$${formatPrecio(item.precio * item.cantidad)}</span>
-                                ${item.envio && item.envio.costo ? `<p class="text-xs text-gray-500">+$${formatPrecio(item.envio.costo)} envío</p>` : ''}
-                            </div>
+                            <span class="font-bold text-brand-900 text-sm">$${item.precio * item.cantidad}</span>
                             <button class="btn-eliminar text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-md transition" data-index="${index}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                             </button>
@@ -481,7 +302,7 @@
                 `);
             });
 
-            totalCarritoEl.textContent = formatPrecio(total + totalEnvio);
+            totalCarritoEl.textContent = total;
             cartCount.textContent = cantidadTotal;
             btnPagar.style.display = 'block'; // Mostramos el botón de pago si hay items
             localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardamos en memoria
@@ -497,18 +318,32 @@
                     return;
                 }
 
-                productosCatalogo = [];
                 snapshot.forEach((doc) => {
-                    productosCatalogo.push({ id: doc.id, ...doc.data() });
-                });
+                    const producto = doc.data();
+                    const id = doc.id; // Obtenemos el ID único generado por Firestore
+                    const sinStock = producto.Stock <= 0;
 
-                const params = new URLSearchParams(window.location.search);
-                const categoriaUrl = params.get('categoria');
-                if (categoriaUrl) {
-                    aplicarFiltroCategoria(categoriaUrl);
-                } else {
-                    renderizarProductos(productosCatalogo);
-                }
+                    const tarjetaHTML = `
+                        <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col border border-gray-100 group">
+                            <a href="producto.html?id=${id}" class="block relative aspect-square overflow-hidden bg-gray-100">
+                                ${sinStock ? '<div class="absolute top-3 left-3 bg-red-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase z-10 shadow-md">Agotado</div>' : ''}
+                                <img src="${producto.Imagen}" alt="${producto.Nombre}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </a>
+                            <div class="p-6 flex flex-col flex-grow">
+                                ${producto.Categoria ? `<span class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">${producto.Categoria}</span>` : ''}
+                                <a href="producto.html?id=${id}">
+                                    <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2 hover:text-brand-500 transition-colors">${producto.Nombre}</h3>
+                                </a>
+                                ${producto.Descripcion_Corta ? `<p class="text-sm text-gray-500 mb-4 line-clamp-3">${producto.Descripcion_Corta}</p>` : ''}
+                                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-50">
+                                    <span class="text-2xl font-black text-brand-900">$${producto.Precio}</span>
+                                    ${!sinStock ? `<button class="btn-agregar bg-brand-50 hover:bg-brand-500 text-brand-500 hover:text-white p-3 rounded-xl transition-colors shadow-sm" data-id="${id}" data-nombre="${producto.Nombre}" data-precio="${producto.Precio}"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></button>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.insertAdjacentHTML('beforeend', tarjetaHTML);
+                });
             } catch (error) {
                 console.error("Error al cargar productos:", error);
                 contenedor.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-red-500">Ocurrió un error al cargar los productos.</p></div>';
@@ -517,19 +352,6 @@
 
         cargarProductos();
         renderizarCarrito(); // Renderizamos el carrito apenas carga la web
-
-        document.querySelectorAll('[data-categoria]').forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const categoria = event.currentTarget.dataset.categoria;
-                if (!categoria) return;
-                const url = categoria === 'Todos'
-                    ? 'index.html#catalogo'
-                    : `index.html?categoria=${encodeURIComponent(categoria)}#catalogo`;
-                window.history.replaceState(null, '', url);
-                aplicarFiltroCategoria(categoria);
-            });
-        });
 
         // Lógica de apertura y cierre del menú lateral del carrito
         const toggleCart = () => {
@@ -554,23 +376,14 @@
                 const id = btnAgregar.getAttribute('data-id');
                 const nombre = btnAgregar.getAttribute('data-nombre');
                 const precio = parseFloat(btnAgregar.getAttribute('data-precio'));
-            const stock = parseInt(btnAgregar.getAttribute('data-stock'));
 
                 // Verificamos si el producto ya está en el carrito para sumar la cantidad
                 const index = carrito.findIndex(item => item.id === id);
                 if (index !== -1) {
-                if (carrito[index].cantidad < stock) {
                     carrito[index].cantidad += 1;
                 } else {
-                    alert(`¡Atención! Solo tenemos ${stock} unidad(es) disponible(s) de este producto.`);
-                    return; // Detenemos la función para que no agregue más
+                    carrito.push({ id, nombre, precio, cantidad: 1 });
                 }
-                } else {
-                if (stock > 0) {
-                    carrito.push({ id, nombre, precio, cantidad: 1, stock: stock });
-                }
-                }
-            
                 renderizarCarrito();
                 // Feedback visual: abrimos el carrito al agregar algo
                 if(cartSidebar.classList.contains('translate-x-full')) toggleCart();

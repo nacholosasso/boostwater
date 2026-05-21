@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Producto - BoostWater</title>
+    <meta property="og:title" content="BoostWater - Tienda Oficial">
+    <meta property="og:description" content="Equipamiento premium para potenciar tus travesías en el agua.">
+    <meta property="og:image" content="https://boostwater-497012.web.app/logo.webp">
+    <meta property="og:url" content="https://boostwater-497012.web.app/">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -45,10 +50,27 @@
                 <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
             </div>
             
-            <button id="cart-toggle" class="relative text-gray-600 hover:text-brand-500 transition z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-            </button>
+            <!-- Controles Derecha (Carrito y Menú Móvil) -->
+            <div class="flex items-center gap-4 z-10">
+                <button id="cart-toggle" class="relative text-gray-600 hover:text-brand-500 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <!-- Botón Hamburguesa -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-500 transition focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex-col">
+            <a href="index.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Inicio</a>
+            <a href="index.html#catalogo" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Productos</a>
+            <a href="nosotros.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Nosotros</a>
+            <a href="preguntasfrecuentes.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">FAQ</a>
+            <a href="garantia.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Garantía</a>
+            <a href="contacto.html" class="block px-6 py-4 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Contacto</a>
         </div>
     </nav>
 
@@ -59,6 +81,28 @@
             <p class="text-gray-500 font-medium">Cargando detalles del producto...</p>
         </div>
     </main>
+
+    <!-- Script Menú Móvil -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnMenu = document.getElementById('mobile-menu-btn');
+            const menuMovil = document.getElementById('mobile-menu');
+            if(btnMenu && menuMovil) {
+                btnMenu.addEventListener('click', () => {
+                    menuMovil.classList.toggle('hidden');
+                    menuMovil.classList.toggle('flex');
+                });
+                // Cerrar el menú al tocar un enlace
+                const links = menuMovil.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        menuMovil.classList.add('hidden');
+                        menuMovil.classList.remove('flex');
+                    });
+                });
+            }
+        });
+    </script>
 
     <!-- Overlay del Carrito -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
@@ -265,7 +309,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
                             <div class="flex items-center justify-center bg-gray-50 rounded-2xl overflow-hidden p-4 relative">
                                 ${sinStock ? '<div class="absolute top-4 left-4 bg-red-500 text-white font-black px-4 py-2 rounded-lg uppercase shadow-md">Agotado</div>' : ''}
-                                <img src="${prod.Imagen}" alt="${prod.Nombre}" class="w-full max-w-md object-contain mix-blend-multiply">
+                                <img src="${prod.Imagen}" alt="${prod.Nombre}" class="w-full max-w-md object-contain mix-blend-multiply" referrerpolicy="no-referrer">
                             </div>
                             <div class="flex flex-col justify-center">
                                 <span class="text-brand-500 font-bold uppercase tracking-widest text-sm mb-2">${prod.Categoria || ''}</span>
