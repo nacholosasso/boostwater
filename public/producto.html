@@ -255,9 +255,10 @@
                                 <span class="text-brand-500 font-bold uppercase tracking-widest text-sm mb-2">${prod.Categoria || ''}</span>
                                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-brand-900 mb-4 leading-tight">${prod.Nombre}</h1>
                                 <p class="text-4xl font-black text-gray-800 mb-6">$${prod.Precio}</p>
-                                <p class="text-gray-600 text-lg mb-8 leading-relaxed">${prod.Descripcion_Corta || ''}</p>
+                                <p class="text-gray-600 text-lg mb-4 leading-relaxed">${prod.Descripcion_Corta || ''}</p>
+                                ${!sinStock ? `<p class="text-sm font-bold text-green-600 mb-6">Stock disponible: ${prod.Stock} unidades</p>` : ''}
                                 ${!sinStock 
-                                  ? `<button class="btn-agregar w-full md:w-auto bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 flex items-center justify-center gap-3 text-lg" data-id="${productId}" data-nombre="${prod.Nombre}" data-precio="${prod.Precio}">Agregar al Carrito</button>` 
+                                  ? `<button class="btn-agregar w-full md:w-auto bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 flex items-center justify-center gap-3 text-lg" data-id="${productId}" data-nombre="${prod.Nombre}" data-precio="${prod.Precio}" data-stock="${prod.Stock}">Agregar al Carrito</button>` 
                                   : `<div class="bg-red-50 text-red-600 border border-red-200 font-bold py-4 px-6 rounded-xl text-center">Producto sin stock actualmente</div>`
                                 }
                             </div>
@@ -287,9 +288,19 @@
                 const id = btnAgregar.getAttribute('data-id');
                 const nombre = btnAgregar.getAttribute('data-nombre');
                 const precio = parseFloat(btnAgregar.getAttribute('data-precio'));
+            const stock = parseInt(btnAgregar.getAttribute('data-stock'));
+            
                 const index = carrito.findIndex(item => item.id === id);
-                if (index !== -1) carrito[index].cantidad += 1;
-                else carrito.push({ id, nombre, precio, cantidad: 1 });
+            if (index !== -1) {
+                if (carrito[index].cantidad < stock) {
+                    carrito[index].cantidad += 1;
+                } else {
+                    alert(`¡Atención! Solo tenemos ${stock} unidad(es) disponible(s) de este producto.`);
+                    return;
+                }
+            } else {
+                if (stock > 0) carrito.push({ id, nombre, precio, cantidad: 1, stock: stock });
+            }
                 renderizarCarrito();
                 if(cartSidebar.classList.contains('translate-x-full')) toggleCart();
             }
