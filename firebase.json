@@ -1,6 +1,9 @@
 {
   "hosting": {
     "public": "public",
+    "predeploy": [
+      "npx tailwindcss -i ./src/input.css -o ./public/css/style.css"
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

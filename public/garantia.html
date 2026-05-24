@@ -9,71 +9,18 @@
     <meta property="og:image" content="https://boostwater-497012.web.app/logo.webp">
     <meta property="og:url" content="https://boostwater-497012.web.app/">
     <meta property="og:type" content="website">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: { extend: { colors: { brand: { 500: '#0ea5e9', 900: '#0f172a' } } } }
-        }
-    </script>
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center z-10">
-                <img src="./logo.webp" alt="Logo BoostWater" class="h-10 md:h-12 object-contain drop-shadow-sm">
-            </a>
-            <div class="hidden md:flex items-center gap-4 lg:gap-8 font-semibold text-gray-600 text-sm lg:text-base">
-                <a href="index.html" class="hover:text-brand-500 transition-colors">Inicio</a>
-                
-                <!-- Dropdown Productos -->
-                <div class="relative group">
-                    <a href="index.html#catalogo" class="hover:text-brand-500 transition-colors flex items-center gap-1 py-2">
-                        Productos
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </a>
-                    <!-- Menú Desplegable -->
-                    <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
-                        <div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2">
-                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Todos los productos</a>
-                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Motores Eléctricos</a>
-                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Baterías y Cargadores</a>
-                            <a href="index.html#catalogo" class="block px-5 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-500 font-medium transition-colors">Accesorios y Repuestos</a>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="nosotros.html" class="hover:text-brand-500 transition-colors">Nosotros</a>
-                <a href="preguntasfrecuentes.html" class="hover:text-brand-500 transition-colors">FAQ</a>
-                <a href="garantia.html" class="text-brand-500 transition-colors">Garantía</a>
-                <a href="contacto.html" class="hover:text-brand-500 transition-colors">Contacto</a>
-            </div>
-            <!-- Controles Derecha -->
-            <div class="flex items-center gap-4 z-10">
-                <!-- Espaciador invisible desktop -->
-                <div class="hidden md:block w-8"></div>
-                <!-- Botón Menú Móvil -->
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-500 transition focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex-col">
-            <a href="index.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Inicio</a>
-            <a href="index.html#catalogo" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Productos</a>
-            <a href="nosotros.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Nosotros</a>
-            <a href="preguntasfrecuentes.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">FAQ</a>
-            <a href="garantia.html" class="block px-6 py-4 border-b border-gray-50 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Garantía</a>
-            <a href="contacto.html" class="block px-6 py-4 text-gray-600 font-semibold hover:text-brand-500 hover:bg-gray-50">Contacto</a>
-        </div>
-    </nav>
+    <!-- Contenedor del Navbar Dinámico -->
+    <div id="navbar-container"></div>
 
     <!-- Contenido de Garantía -->
-    <main class="flex-grow container mx-auto px-6 pt-32 pb-20">
-        <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-20" data-aos="fade-up">
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100" data-aos="fade-in" data-aos-delay="200">
             <div class="text-center mb-12">
                 <h1 class="text-3xl md:text-5xl font-black text-brand-900 mb-4">Política de Devolución y Garantía</h1>
                 <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full"></div>
@@ -240,8 +187,10 @@
                 </div>
                 <h4 class="text-lg font-bold mb-4 border-b-2 border-brand-500 pb-2 inline-block">Métodos de Envío</h4>
                 <div class="flex gap-2 flex-wrap">
-                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Retiro local</span>
-                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Envío a coordinar con el comprador</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">OCA</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Andreani</span>
+                    <span class="bg-brand-500 text-white font-bold px-2 py-1 rounded text-xs tracking-wider">Urbano</span>
+                    <span class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-xs tracking-wider">Retiro local</span>
                 </div>
             </div>
         </div>
@@ -258,25 +207,11 @@
         </svg>
     </a>
 
-    <!-- Script Menú Móvil -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnMenu = document.getElementById('mobile-menu-btn');
-            const menuMovil = document.getElementById('mobile-menu');
-            if(btnMenu && menuMovil) {
-                btnMenu.addEventListener('click', () => {
-                    menuMovil.classList.toggle('hidden');
-                    menuMovil.classList.toggle('flex');
-                });
-                const links = menuMovil.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        menuMovil.classList.add('hidden');
-                        menuMovil.classList.remove('flex');
-                    });
-                });
-            }
-        });
-    </script>
+    <!-- Scripts de Animación AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: true, duration: 800, offset: 50 });</script>
+
+    <!-- App Scripts Centralizados -->
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
