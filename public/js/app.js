@@ -89,7 +89,7 @@ if (slides.length > 0) {
 }
 
 // ============================================
-// LÓGICA GLOBAL DEL CARRITO Y ENVIOPACK
+// LÓGICA GLOBAL DEL CARRITO Y ENVÍOS
 // ============================================
 
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
