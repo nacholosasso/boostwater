@@ -93,13 +93,33 @@ if (slides.length > 0) {
 // ============================================
 
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-let costoEnvioGlobal = 0;
-let nombreEnvioGlobal = 'Retiro en local';
+
+// envioInfo viaja en localStorage para que la página de Checkout (otra
+// navegación, otro load de app.js) sepa qué tipo de entrega se eligió.
+let envioInfo = JSON.parse(localStorage.getItem('envioInfo')) || { tipo: 'retiro', nombre: 'Retiro en local', costo: 0, cp: '' };
+let costoEnvioGlobal = envioInfo.costo;
+let nombreEnvioGlobal = envioInfo.nombre;
 
 function formatPrecio(valor) {
     return new Intl.NumberFormat('es-AR').format(valor);
 }
 
+function guardarEnvioInfo(tipo, nombre, costo, cp) {
+    envioInfo = { tipo, nombre, costo, cp: cp || '' };
+    costoEnvioGlobal = costo;
+    nombreEnvioGlobal = nombre;
+    localStorage.setItem('envioInfo', JSON.stringify(envioInfo));
+}
+
+// Resetea la cotización si el usuario suma o quita productos después de haber calculado
+function reiniciarEnvioSiCambia() {
+    const calculadorWrapper = document.getElementById('calculador-envio-wrapper');
+    if (calculadorWrapper && !calculadorWrapper.classList.contains('hidden')) {
+        guardarEnvioInfo('envio_pendiente', 'Envío por correo (Pendiente de cálculo)', 0, '');
+        const opcionesContainer = document.getElementById('opciones-envio-container');
+        if (opcionesContainer) opcionesContainer.innerHTML = '<p class="text-sm text-amber-600 text-center py-2 font-semibold">Modificaste el carrito. Por favor, volvé a calcular el envío.</p>';
+    }
+}
 
 function renderizarCarrito() {
     const contenedorCarrito = document.getElementById('contenedor-carrito');
@@ -135,11 +155,11 @@ function renderizarCarrito() {
         cantidadTotal += item.cantidad;
         
         contenedorCarrito.insertAdjacentHTML('beforeend', `
-            <div class="flex justify-between items-start bg-white p-3 rounded-lg border shadow-sm mb-3">
+            <div class="flex justify-between items-start bg-white p-3 rounded-lg border shadow-sm mb-2">
                 <div class="flex-1">
                     <h4 class="text-sm font-semibold text-gray-800 line-clamp-1">${item.nombre}</h4>
                     <div class="flex items-center gap-2 mt-1">
-                        <input type="number" min="1" max="${item.stock}" value="${item.cantidad}" class="input-cantidad w-16 px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-brand-500" data-index="${index}">
+                        <input type="number" aria-label="Cantidad de ${item.nombre}" min="1" max="${item.stock}" value="${item.cantidad}" class="input-cantidad w-16 px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-brand-500" data-index="${index}">
                         <p class="text-xs text-gray-500">x $${formatPrecio(item.precio)}</p>
                     </div>
                 </div>
@@ -147,7 +167,7 @@ function renderizarCarrito() {
                     <div class="text-right">
                         <span class="font-bold text-brand-900 text-sm">$${formatPrecio(item.precio * item.cantidad)}</span>
                     </div>
-                    <button class="btn-eliminar text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-md transition" data-index="${index}">
+                    <button class="btn-eliminar text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-md transition" aria-label="Eliminar ${item.nombre}" data-index="${index}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                 </div>
@@ -224,6 +244,7 @@ document.addEventListener('click', async (e) => {
         const altoProd = parseFloat(btnAgregar.getAttribute('data-alto'));
         const anchoProd = parseFloat(btnAgregar.getAttribute('data-ancho'));
         const largoProd = parseFloat(btnAgregar.getAttribute('data-largo'));
+        const valorDeclaradoProd = parseFloat(btnAgregar.getAttribute('data-valor-declarado'));
         
         const inputCant = document.getElementById('cantidad-producto');
         const cantidadDeseada = inputCant ? parseInt(inputCant.value) : 1;
@@ -243,56 +264,123 @@ document.addEventListener('click', async (e) => {
             }
         } else {
             if (stock > 0 && cantidadDeseada <= stock) {
-                carrito.push({ id, nombre, precio, cantidad: cantidadDeseada, stock: stock, peso: pesoProd, alto: altoProd, ancho: anchoProd, largo: largoProd });
+                carrito.push({ id, nombre, precio, cantidad: cantidadDeseada, stock: stock, peso: pesoProd, alto: altoProd, ancho: anchoProd, largo: largoProd, valorDeclarado: valorDeclaradoProd });
             } else if (cantidadDeseada > stock) {
                 alert(`¡Atención! Solo tenemos ${stock} unidad(es) disponible(s) de este producto.`);
                 return;
             }
         }
+        reiniciarEnvioSiCambia();
         renderizarCarrito();
-        if (cartSidebar && cartSidebar.classList.contains('translate-x-full')) toggleCart();
+        const sideCartEl = document.getElementById('cart-sidebar');
+        if (sideCartEl && sideCartEl.classList.contains('translate-x-full')) toggleCart();
     }
 
     const btnEliminar = e.target.closest('.btn-eliminar');
     if (btnEliminar) {
         const index = btnEliminar.getAttribute('data-index');
         carrito.splice(index, 1);
+        reiniciarEnvioSiCambia();
         renderizarCarrito();
     }
 
 
     // ============================================
-    // ACCIÓN: FINALIZAR COMPRA (Enviar a WhatsApp)
+    // ACCIÓN: FINALIZAR COMPRA (ir al Checkout)
     // ============================================
     const btnPagarClick = e.target.closest('#btn-pagar');
     if (btnPagarClick) {
         if (carrito.length === 0) return;
-        
-        let textoWhatsApp = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A";
-        
-        carrito.forEach(item => {
-            textoWhatsApp += `- ${item.cantidad}x ${item.nombre} ($${formatPrecio(item.precio * item.cantidad)})%0A`;
-        });
-        
-        let totalProd = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
-        let totalDesc = Math.round(totalProd * 0.93) + costoEnvioGlobal;
-        let totalStd = totalProd + costoEnvioGlobal;
-        
-        if (costoEnvioGlobal > 0) {
-            textoWhatsApp += `%0A📦 Envío: ${nombreEnvioGlobal} ($${formatPrecio(costoEnvioGlobal)})`;
-        } else if (nombreEnvioGlobal === 'Retiro en local') {
-            textoWhatsApp += `%0A📦 Envío: Retiro en local (Gratis)`;
-        } else {
-            textoWhatsApp += `%0A📦 Envío: ${nombreEnvioGlobal}`;
+
+        if (envioInfo.tipo === 'envio_pendiente') {
+            alert('Por favor, calculá el costo de envío antes de continuar.');
+            return;
         }
 
-        textoWhatsApp += `%0A%0A*Total:* $${formatPrecio(totalStd)}`;
-        textoWhatsApp += `%0A*Pagando con Transferencia:* $${formatPrecio(totalDesc)}%0A`;
-        textoWhatsApp += `%0A¡Espero la confirmación para avanzar con el pago!`;
+        window.location.href = 'cart.html';
+    }
 
-        const numeroWhatsApp = "5491134519455";
-        const url = `https://wa.me/${numeroWhatsApp}?text=${textoWhatsApp}`;
-        window.open(url, '_blank');
+    // ============================================
+    // ACCIÓN: CALCULAR ENVÍO (OCA ePak)
+    // ============================================
+    const btnCalcularCpClick = e.target.closest('#btn-calcular-cp');
+    if (btnCalcularCpClick) {
+        e.preventDefault();
+        const inputCp = document.getElementById('input-cp');
+        const cpDestino = inputCp ? inputCp.value.trim() : '';
+
+        if (!cpDestino || cpDestino.length < 4) {
+            alert('Por favor, ingresá un Código Postal válido.');
+            return;
+        }
+
+        // 1. Calcular el peso y volumen total del carrito
+        let pesoTotal = 0;
+        let volumenM3 = 0;
+        
+        carrito.forEach(item => {
+            // Asume que data-peso está en KG, y data-alto/ancho/largo en CM
+            pesoTotal += (item.peso || 1) * item.cantidad; 
+            
+            const altoM = (item.alto || 10) / 100;
+            const anchoM = (item.ancho || 10) / 100;
+            const largoM = (item.largo || 10) / 100;
+            volumenM3 += (altoM * anchoM * largoM) * item.cantidad;
+        });
+
+        const opcionesContainer = document.getElementById('opciones-envio-container');
+        if (opcionesContainer) {
+            opcionesContainer.innerHTML = '<p class="text-sm text-gray-500 text-center animate-pulse py-2">Calculando tarifas de OCA...</p>';
+            opcionesContainer.classList.remove('hidden');
+        }
+
+        try {
+            // 2. Llamada real a tu Cloud Function de Firebase
+            const response = await fetch('https://us-central1-boostwater-497012.cloudfunctions.net/cotizarOCA', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cpDestino: cpDestino,
+                    peso: pesoTotal,
+                    volumen: volumenM3,
+                    valorDeclarado: carrito.reduce((acc, item) => acc + ((item.valorDeclarado || item.precio) * item.cantidad), 0)
+                })
+            });
+            
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                console.error("Detalle del error del backend:", errData);
+                throw new Error('Error HTTP al calcular cotización');
+            }
+            const tarifas = await response.json();
+
+                if (opcionesContainer) {
+                opcionesContainer.innerHTML = '';
+                if (tarifas.length === 0) {
+                    opcionesContainer.innerHTML = '<p class="text-sm text-red-500 text-center py-2">No se encontraron tarifas para este CP.</p>';
+                    return;
+                }
+                tarifas.forEach(tarifa => {
+                    opcionesContainer.innerHTML += `
+                        <label class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-colors shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="tarifa-seleccionada" value="${tarifa.precio}" data-nombre="${tarifa.nombre}" class="w-4 h-4 text-brand-500 focus:ring-brand-500 cursor-pointer">
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">${tarifa.nombre}</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-gray-800">$${formatPrecio(tarifa.precio)}</span>
+                        </label>
+                    `;
+                });
+                }
+
+        } catch (error) {
+            console.error("Error al cotizar:", error);
+            if (opcionesContainer) {
+                opcionesContainer.innerHTML = '<p class="text-sm text-red-500 text-center py-2">Hubo un error al calcular el envío. Intentá nuevamente.</p>';
+            }
+        }
     }
 });
 
@@ -310,29 +398,199 @@ document.addEventListener('change', (e) => {
         }
 
         carrito[index].cantidad = nuevaCantidad;
+        reiniciarEnvioSiCambia();
         renderizarCarrito();
     }
 
     if (e.target.name === 'tipo-entrega') {
+        const calculadorWrapper = document.getElementById('calculador-envio-wrapper');
+
         if (e.target.value === 'envio') {
-            costoEnvioGlobal = 0;
-            nombreEnvioGlobal = 'Envío por correo (A coordinar)';
+            if (calculadorWrapper) calculadorWrapper.classList.remove('hidden');
+            guardarEnvioInfo('envio_pendiente', 'Envío por correo (Pendiente de cálculo)', 0, '');
         } else {
-            costoEnvioGlobal = 0;
-            nombreEnvioGlobal = 'Retiro en local';
+            if (calculadorWrapper) calculadorWrapper.classList.add('hidden');
+            guardarEnvioInfo('retiro', 'Retiro en local', 0, '');
         }
         renderizarCarrito();
+    }
+
+    // Escuchar cuando el usuario selecciona una de las tarifas devueltas por OCA
+    if (e.target.name === 'tarifa-seleccionada') {
+        const nombreTarifa = e.target.getAttribute('data-nombre');
+        const inputCp = document.getElementById('input-cp');
+        const cpUsado = inputCp ? inputCp.value.trim() : '';
+        const tipo = nombreTarifa.includes('Domicilio') ? 'oca_domicilio' : 'oca_sucursal';
+
+        guardarEnvioInfo(tipo, nombreTarifa, parseFloat(e.target.value), cpUsado);
+        renderizarCarrito(); // Actualizamos los totales del carrito
     }
 });
 
 renderizarCarrito();
 
 // ============================================
+// LÓGICA DE CHECKOUT (cart.html)
+// ============================================
+const checkoutForm = document.getElementById('checkout-form');
+if (checkoutForm) {
+    const PROVINCIAS_AR = [
+        "Buenos Aires", "CABA", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes",
+        "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones",
+        "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe",
+        "Santiago del Estero", "Tierra del Fuego", "Tucumán"
+    ];
+    const numeroWhatsApp = "5491134519455";
+
+    const requiereDni = envioInfo.tipo === 'oca_sucursal' || envioInfo.tipo === 'oca_domicilio';
+    const requiereDireccion = envioInfo.tipo === 'oca_domicilio';
+
+    if (carrito.length === 0) {
+        window.location.href = 'index.html';
+    } else if (envioInfo.tipo === 'envio_pendiente') {
+        alert('Por favor, volvé al carrito y calculá el costo de envío antes de continuar.');
+        window.location.href = 'index.html';
+    } else {
+
+    // Renderizar resumen del pedido
+    const checkoutItemsEl = document.getElementById('checkout-items');
+    let totalProductos = 0;
+    carrito.forEach(item => {
+        totalProductos += item.precio * item.cantidad;
+        checkoutItemsEl.insertAdjacentHTML('beforeend', `
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">${item.cantidad}x ${item.nombre}</span>
+                <span class="font-semibold text-gray-800">$${formatPrecio(item.precio * item.cantidad)}</span>
+            </div>
+        `);
+    });
+    const totalFinal = totalProductos + envioInfo.costo;
+    const totalConTransferencia = Math.round(totalProductos * 0.93) + envioInfo.costo;
+
+    document.getElementById('checkout-subtotal').textContent = '$' + formatPrecio(totalProductos);
+    document.getElementById('checkout-envio-nombre').textContent = envioInfo.nombre;
+    document.getElementById('checkout-envio-costo').textContent = envioInfo.costo > 0 ? '$' + formatPrecio(envioInfo.costo) : 'Gratis';
+    document.getElementById('checkout-total').textContent = formatPrecio(totalFinal);
+    document.getElementById('checkout-total-descuento').textContent = formatPrecio(totalConTransferencia);
+
+    // Mostrar/ocultar y exigir campos según el tipo de entrega elegido en el carrito
+    const dniWrapper = document.getElementById('co-dni-wrapper');
+    const direccionWrapper = document.getElementById('co-direccion-wrapper');
+    if (requiereDni && dniWrapper) dniWrapper.classList.remove('hidden');
+
+    if (requiereDireccion && direccionWrapper) {
+        direccionWrapper.classList.remove('hidden');
+        ['co-calle', 'co-numero', 'co-localidad', 'co-provincia'].forEach(id => {
+            document.getElementById(id).setAttribute('required', 'required');
+        });
+        const selectProvincia = document.getElementById('co-provincia');
+        PROVINCIAS_AR.forEach(p => selectProvincia.insertAdjacentHTML('beforeend', `<option value="${p}">${p}</option>`));
+    }
+    const inputCpCheckout = document.getElementById('co-cp');
+    if (inputCpCheckout) inputCpCheckout.value = envioInfo.cp || '';
+
+    // Efectivo solo tiene sentido si retira en el local (no hay forma de
+    // cobrar en efectivo un envío que coordina OCA)
+    if (envioInfo.tipo === 'retiro') {
+        document.getElementById('co-metodo-efectivo-wrapper').classList.remove('hidden');
+    }
+
+    checkoutForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById('checkout-error');
+        const btnConfirmar = document.getElementById('btn-confirmar-pedido');
+        errorEl.classList.add('hidden');
+
+        const cliente = {
+            nombre: document.getElementById('co-nombre').value.trim(),
+            apellido: document.getElementById('co-apellido').value.trim(),
+            email: document.getElementById('co-email').value.trim(),
+            telefono: document.getElementById('co-telefono').value.trim(),
+            dni: requiereDni ? document.getElementById('co-dni').value.trim() : null
+        };
+
+        const direccion = requiereDireccion ? {
+            calle: document.getElementById('co-calle').value.trim(),
+            numero: document.getElementById('co-numero').value.trim(),
+            piso: document.getElementById('co-piso').value.trim(),
+            localidad: document.getElementById('co-localidad').value.trim(),
+            provincia: document.getElementById('co-provincia').value,
+            cp: envioInfo.cp
+        } : null;
+
+        const observaciones = document.getElementById('co-observaciones').value.trim();
+
+        const metodoPago = document.querySelector('input[name="metodo-pago"]:checked').value;
+
+        const payload = {
+            items: carrito.map(item => ({ id: item.id, cantidad: item.cantidad })),
+            envio: { tipo: envioInfo.tipo, nombre: envioInfo.nombre, costo: envioInfo.costo },
+            cliente,
+            direccion,
+            observaciones,
+            metodoPago
+        };
+
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = 'Confirmando...';
+
+        try {
+            const response = await fetch('https://us-central1-boostwater-497012.cloudfunctions.net/crearPedido', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'No se pudo confirmar el pedido');
+
+            const numeroPedido = data.pedidoId.slice(-6).toUpperCase();
+
+            carrito = [];
+            localStorage.removeItem('carrito');
+            localStorage.removeItem('envioInfo');
+            renderizarCarrito();
+
+            // Mostrar confirmación en la página: el mail de confirmación ya lo
+            // manda el backend. Solo si paga por transferencia lo derivamos a
+            // WhatsApp para coordinar el pago manualmente.
+            document.getElementById('checkout-form-titulo').classList.add('hidden');
+            checkoutForm.classList.add('hidden');
+            document.getElementById('checkout-confirmacion-numero').textContent = `Pedido #${numeroPedido}`;
+            let mensajeConfirmacion = `Te enviamos un mail de confirmación a ${cliente.email}.`;
+            if (metodoPago === 'efectivo') mensajeConfirmacion += ' Pagás en efectivo cuando retires tu pedido en el local.';
+            document.getElementById('checkout-confirmacion-mensaje').textContent = mensajeConfirmacion;
+
+            if (metodoPago === 'transferencia') {
+                let texto = `¡Hola! Quiero coordinar el pago de mi pedido *#${numeroPedido}*.%0A%0A`;
+                texto += `*Total:* $${formatPrecio(data.totales.totalFinal)}`;
+                texto += `%0A*Pagando con Transferencia:* $${formatPrecio(data.totales.totalConTransferencia)} (El 7% OFF no aplica al envío)`;
+
+                const linkWhatsapp = document.getElementById('checkout-confirmacion-whatsapp');
+                linkWhatsapp.href = `https://wa.me/${numeroWhatsApp}?text=${texto}`;
+                linkWhatsapp.classList.remove('hidden');
+            }
+
+            document.getElementById('checkout-confirmacion').classList.remove('hidden');
+
+        } catch (error) {
+            console.error('Error al confirmar el pedido:', error);
+            errorEl.textContent = error.message || 'Hubo un error al confirmar el pedido. Intentá nuevamente.';
+            errorEl.classList.remove('hidden');
+            btnConfirmar.disabled = false;
+            btnConfirmar.textContent = 'Confirmar pedido';
+        }
+    });
+
+    } // cierre del else (carrito con datos válidos)
+}
+
+// ============================================
 // LÓGICA DE CATÁLOGO (index.html)
 // ============================================
 const contenedorProductos = document.getElementById('contenedor-productos');
 if (contenedorProductos) {
-    const qDocs = query(collection(db, "productos"), where("Publicado", "==", true));
+    const qDocs = query(collection(db, "productos"), where("Publicado_", "==", true));
     let productosCatalogo = [];
     let categoriaSeleccionada = null;
 
@@ -346,26 +604,26 @@ if (contenedorProductos) {
         listaProductos.forEach((producto, index) => {
             const delay = (index % 4) * 100; // Crea un efecto cascada por fila
             const id = producto.id;
-            const sinStock = producto.Stock <= 0;
+            const sinStock = producto.Stock_ <= 0;
             const tarjetaHTML = `
                 <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col border border-gray-100 group" data-aos="fade-up" data-aos-delay="${delay}">
                     <a href="producto.html?id=${id}" class="block relative aspect-square overflow-hidden bg-gray-100">
                         ${sinStock ? '<div class="absolute top-3 left-3 bg-red-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase z-10 shadow-md">Agotado</div>' : ''}
-                        <img src="${producto.Imagen}" alt="${producto.Nombre}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" referrerpolicy="no-referrer">
+                        <img src="${producto["Imagen_"]}" width="400" height="400" alt="${producto.Nombre_}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" referrerpolicy="no-referrer">
                     </a>
                     <div class="p-6 flex flex-col flex-grow">
-                        ${producto.Categoria ? `<span class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">${producto.Categoria}</span>` : ''}
+                        ${producto.Categoria_ ? `<span class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">${producto.Categoria_}</span>` : ''}
                         <a href="producto.html?id=${id}">
-                            <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2 hover:text-brand-500 transition-colors">${producto.Nombre}</h3>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2 hover:text-brand-500 transition-colors">${producto.Nombre_}</h3>
                         </a>
-                        ${producto.Descripcion_Corta ? `<p class="text-sm text-gray-500 mb-2 line-clamp-3">${producto.Descripcion_Corta}</p>` : ''}
-                        ${!sinStock ? `<p class="text-xs font-bold text-green-600 mb-4">Stock disponible: ${producto.Stock}</p>` : ''}
+                        ${producto["Descripcion-Corta_"] ? `<p class="text-sm text-gray-500 mb-2 line-clamp-3">${producto["Descripcion-Corta_"]}</p>` : ''}
+                        ${!sinStock ? `<p class="text-xs font-bold text-green-600 mb-4">Stock disponible: ${producto.Stock_}</p>` : ''}
                         <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-50">
                             <div>
-                                <span class="text-2xl font-black text-brand-900 block">$${formatPrecio(producto.Precio)}</span>
-                                <span class="text-[11px] font-bold text-green-600 block mt-1">$${formatPrecio(Math.round(producto.Precio * 0.93))} <span class="text-gray-500 font-medium">con Transferencia o depósito</span></span>
+                                <span class="text-2xl font-black text-brand-900 block">$${formatPrecio(producto.Precio_)}</span>
+                                <span class="text-[11px] font-bold text-green-600 block mt-1">$${formatPrecio(Math.round(producto.Precio_ * 0.93))} <span class="text-gray-500 font-medium">con Transferencia o depósito</span></span>
                             </div>
-                            ${!sinStock ? `<button class="btn-agregar shrink-0 bg-brand-50 hover:bg-brand-500 text-brand-500 hover:text-white p-3 rounded-xl transition-colors shadow-sm ml-2" data-id="${id}" data-nombre="${producto.Nombre}" data-precio="${producto.Precio}" data-stock="${producto.Stock}" data-peso="${producto.Peso || 1}" data-alto="${producto.Alto || 10}" data-ancho="${producto.Ancho || 10}" data-largo="${producto.Largo || 10}"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></button>` : ''}
+                            ${!sinStock ? `<button class="btn-agregar shrink-0 bg-brand-50 hover:bg-brand-500 text-brand-500 hover:text-white p-3 rounded-xl transition-colors shadow-sm ml-2" aria-label="Agregar ${producto.Nombre_} al carrito" data-id="${id}" data-nombre="${producto.Nombre_}" data-precio="${producto.Precio_}" data-stock="${producto.Stock_}" data-peso="${producto["Peso-kg_"] || 1}" data-alto="${producto["Alto-cm_"] || 10}" data-ancho="${producto["Ancho-cm_"] || 10}" data-largo="${producto["Largo-cm_"] || 10}" data-valor-declarado="${producto["Valor-declarado_"] || producto.Precio_}"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></button>` : ''}
                         </div>
                     </div>
                 </div>
@@ -379,7 +637,7 @@ if (contenedorProductos) {
 
     function aplicarFiltroCategoria(categoria) {
         categoriaSeleccionada = categoria === 'Todos' ? null : categoria;
-        const productosFiltrados = categoriaSeleccionada ? productosCatalogo.filter(p => p.Categoria && p.Categoria.toLowerCase() === categoriaSeleccionada.toLowerCase()) : productosCatalogo;
+        const productosFiltrados = categoriaSeleccionada ? productosCatalogo.filter(p => p.Categoria_ && p.Categoria_.toLowerCase() === categoriaSeleccionada.toLowerCase()) : productosCatalogo;
         renderizarProductos(productosFiltrados);
         const filtroActivo = document.querySelectorAll('[data-categoria]');
         filtroActivo.forEach(el => {
@@ -452,35 +710,35 @@ if (detalleProducto) {
 
             if (docSnap.exists()) {
                 const prod = docSnap.data();
-                const sinStock = prod.Stock <= 0;
-                const specsFormat = prod.Especificaciones ? prod.Especificaciones.replace(/- /g, '<br>• ') : 'No hay especificaciones disponibles.';
+                const sinStock = prod.Stock_ <= 0;
+                const specsFormat = prod.Especificaciones_ ? prod.Especificaciones_.replace(/- /g, '<br>• ') : 'No hay especificaciones disponibles.';
 
                 // Actualizar Pestaña SEO dinámicamente
-                document.title = `${prod.Nombre} - BoostWater`;
+                document.title = `${prod.Nombre_} - BoostWater`;
 
                 detalleProducto.innerHTML = `
                     <div class="mb-6" data-aos="fade-right"><a href="index.html#catalogo" class="text-brand-500 font-semibold hover:underline flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Volver</a></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100" data-aos="fade-up">
                         <div class="flex items-center justify-center bg-gray-50 rounded-2xl overflow-hidden p-4 relative">
                             ${sinStock ? '<div class="absolute top-4 left-4 bg-red-500 text-white font-black px-4 py-2 rounded-lg uppercase shadow-md">Agotado</div>' : ''}
-                            <img src="${prod.Imagen}" alt="${prod.Nombre}" class="w-full max-w-md object-contain mix-blend-multiply">
+                            <img src="${prod["Imagen_"]}" width="600" height="600" alt="${prod.Nombre_}" class="w-full max-w-md object-contain mix-blend-multiply">
                         </div>
                         <div class="flex flex-col justify-center">
-                            <span class="text-brand-500 font-bold uppercase tracking-widest text-sm mb-2">${prod.Categoria || ''}</span>
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-brand-900 mb-4 leading-tight">${prod.Nombre}</h1>
+                            <span class="text-brand-500 font-bold uppercase tracking-widest text-sm mb-2">${prod.Categoria_ || ''}</span>
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-brand-900 mb-4 leading-tight">${prod.Nombre_}</h1>
                             <div class="mb-6">
-                                <p class="text-4xl font-black text-gray-800">$${formatPrecio(prod.Precio)}</p>
-                                <p class="text-sm font-bold text-green-600 mt-2">$${formatPrecio(Math.round(prod.Precio * 0.93))} <span class="text-gray-500 font-medium">abonando con Transferencia o depósito bancario (7% OFF)</span></p>
+                                <p class="text-4xl font-black text-gray-800">$${formatPrecio(prod.Precio_)}</p>
+                                <p class="text-sm font-bold text-green-600 mt-2">$${formatPrecio(Math.round(prod.Precio_ * 0.93))} <span class="text-gray-500 font-medium">abonando con Transferencia o depósito bancario (7% OFF)</span></p>
                             </div>
-                            <p class="text-gray-600 text-lg mb-4 leading-relaxed">${prod.Descripcion_Corta || ''}</p>
-                        ${!sinStock ? `<p class="text-md font-bold text-green-600 mb-6">Stock disponible: ${prod.Stock}</p>` : ''}
-                            ${!sinStock 
+                            <p class="text-gray-600 text-lg mb-4 leading-relaxed">${prod["Descripcion-Corta_"] || ''}</p>
+                        ${!sinStock ? `<p class="text-md font-bold text-green-600 mb-6">Stock disponible: ${prod.Stock_}</p>` : ''}
+                            ${!sinStock
                           ? `<div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                                  <div class="flex items-center justify-center border border-gray-200 rounded-xl bg-white px-4 py-2">
-                                     <span class="text-gray-500 text-sm font-bold mr-2">Cant:</span>
-                                     <input type="number" id="cantidad-producto" min="1" max="${prod.Stock}" value="1" class="w-16 outline-none text-lg font-bold text-center text-brand-900 bg-transparent">
+                                     <label for="cantidad-producto" class="text-gray-500 text-sm font-bold mr-2">Cant:</label>
+                                     <input type="number" id="cantidad-producto" min="1" max="${prod.Stock_}" value="1" class="w-16 outline-none text-lg font-bold text-center text-brand-900 bg-transparent">
                                  </div>
-                                 <button class="btn-agregar flex-1 bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 flex items-center justify-center gap-3 text-lg" data-id="${productId}" data-nombre="${prod.Nombre}" data-precio="${prod.Precio}" data-stock="${prod.Stock}" data-peso="${prod.Peso || 1}" data-alto="${prod.Alto || 10}" data-ancho="${prod.Ancho || 10}" data-largo="${prod.Largo || 10}">Agregar al Carrito</button>
+                                 <button class="btn-agregar flex-1 bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 flex items-center justify-center gap-3 text-lg" data-id="${productId}" data-nombre="${prod.Nombre_}" data-precio="${prod.Precio_}" data-stock="${prod.Stock_}" data-peso="${prod["Peso-kg_"] || 1}" data-alto="${prod["Alto-cm_"] || 10}" data-ancho="${prod["Ancho-cm_"] || 10}" data-largo="${prod["Largo-cm_"] || 10}" data-valor-declarado="${prod["Valor-declarado_"] || prod.Precio_}">Agregar al Carrito</button>
                              </div>` 
                               : `<div class="bg-red-50 text-red-600 border border-red-200 font-bold py-4 px-6 rounded-xl text-center">Producto sin stock actualmente</div>`
                             }
@@ -490,7 +748,7 @@ if (detalleProducto) {
                     <!-- Descripciones y Especificaciones -->
                     <div class="mt-12 bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12" data-aos="fade-up" data-aos-delay="200">
                         <h3 class="text-2xl font-black text-brand-900 mb-6 border-b pb-4">Descripción General</h3>
-                        <p class="text-gray-600 leading-relaxed mb-12 text-lg whitespace-pre-line">${prod.Descripcion || 'No hay descripción disponible.'}</p>
+                        <p class="text-gray-600 leading-relaxed mb-12 text-lg whitespace-pre-line">${prod.Descripcion_ || 'No hay descripción disponible.'}</p>
                         
                         <h3 class="text-2xl font-black text-brand-900 mb-6 border-b pb-4">Especificaciones Técnicas</h3>
                         <p class="text-gray-600 leading-relaxed text-lg">${specsFormat}</p>

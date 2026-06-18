@@ -1,65 +1,161 @@
-<!-- Overlay del Carrito -->
-<div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - BoostWater</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
 
-<!-- Sidecart (Carrito lateral derecho) -->
-<aside id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
-    <div class="px-6 py-5 border-b flex justify-between items-center bg-gray-50">
-        <h2 class="text-xl font-black text-brand-900 uppercase tracking-wide">Tu Carrito</h2>
-        <button id="cart-close" class="text-gray-400 hover:text-red-500 transition-colors bg-white rounded-full p-2 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
-    </div>
-    
-    <div id="contenedor-carrito" class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50/50">
-    </div>
-    
-    <!-- Opciones de Entrega (Retiro + Correo Argentino) -->
-    <div id="envio-calculator-section" class="p-6 border-t bg-gray-50 hidden">
-        <h4 class="text-sm font-bold text-gray-800 mb-4">📦 Opciones de entrega</h4>
-        
-        <!-- Opción: Retiro en local -->
-        <label class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-colors shadow-sm mb-3">
-            <div class="flex items-center gap-3">
-                <input type="radio" name="tipo-entrega" value="retiro" class="w-4 h-4 text-brand-500 focus:ring-brand-500 cursor-pointer" checked>
-                <div>
-                    <p class="text-sm font-bold text-gray-800">Retiro en local</p>
-                    <p class="text-xs text-gray-500">Gratis</p>
+    <!-- Contenedor del Navbar Dinámico -->
+    <div id="navbar-container"></div>
+
+    <!-- Contenido del Checkout -->
+    <main class="flex-grow container mx-auto px-6 py-32 max-w-5xl">
+        <h1 class="text-3xl md:text-4xl font-black text-brand-900 mb-10 text-center">Finalizar Compra</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <!-- Resumen del pedido -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 order-2 md:order-1">
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Resumen de tu pedido</h2>
+                <div id="checkout-items" class="space-y-2 mb-4"></div>
+                <div class="border-t pt-4 space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Productos</span>
+                        <span id="checkout-subtotal" class="font-semibold text-gray-800">$0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span id="checkout-envio-nombre" class="text-gray-500">Envío</span>
+                        <span id="checkout-envio-costo" class="font-semibold text-gray-800">$0</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-black text-gray-800 pt-3 border-t">
+                        <span>Total</span>
+                        <span>$<span id="checkout-total">0</span></span>
+                    </div>
+                    <div class="flex justify-between text-green-600 font-bold">
+                        <span>Pagando con Transferencia</span>
+                        <span>$<span id="checkout-total-descuento">0</span></span>
+                    </div>
                 </div>
             </div>
-            <span class="font-bold text-green-600">Gratis</span>
-        </label>
 
-        <!-- Opción: Envío por correo -->
-        <label class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-colors shadow-sm mb-2">
-            <div class="flex items-center gap-3">
-                <input type="radio" name="tipo-entrega" value="envio" class="w-4 h-4 text-brand-500 focus:ring-brand-500 cursor-pointer">
-                <div>
-                    <p class="text-sm font-bold text-gray-800">Envío por correo</p>
-                    <p class="text-xs text-gray-500">Costo a calcular</p>
+            <!-- Formulario de datos del cliente -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 order-1 md:order-2">
+                <!-- Confirmación post-pedido (oculta hasta que se confirme) -->
+                <div id="checkout-confirmacion" class="hidden text-center py-6">
+                    <div class="text-5xl mb-4">✅</div>
+                    <h2 class="text-xl font-black text-brand-900 mb-2">¡Pedido confirmado!</h2>
+                    <p id="checkout-confirmacion-numero" class="text-sm text-gray-500 mb-4"></p>
+                    <p id="checkout-confirmacion-mensaje" class="text-gray-600 mb-6"></p>
+                    <a id="checkout-confirmacion-whatsapp" class="hidden inline-block bg-[#25D366] hover:opacity-90 text-white font-bold py-3 px-6 rounded-xl transition-all" target="_blank" rel="noopener noreferrer">Coordinar pago por WhatsApp</a>
+                    <a href="index.html" class="block mt-4 text-sm text-brand-500 hover:underline font-semibold">Volver al inicio</a>
                 </div>
-            </div>
-        </label>
 
-        <!-- Calculador de Envíos -->
-        <div id="calculador-envio-wrapper" class="hidden mt-3 pt-3 border-t border-gray-200">
-            <p class="text-xs font-semibold text-gray-600 mb-2">Ingresá tu código postal (CP):</p>
-            <div class="flex gap-2">
-                <input type="text" id="input-cp" placeholder="Tu CP (ej: 7600)" class="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none text-sm bg-white">
-                <button id="btn-calcular-cp" class="bg-brand-900 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">Calcular</button>
-            </div>
-            <div id="opciones-envio-container" class="space-y-3 mt-4 empty:hidden"></div>
-        </div>
-    </div>
+                <h2 id="checkout-form-titulo" class="text-lg font-bold text-gray-800 mb-4">Tus datos</h2>
+                <form id="checkout-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="co-nombre" class="block text-sm font-bold text-gray-700 mb-1">Nombre</label>
+                            <input type="text" id="co-nombre" required class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                        <div>
+                            <label for="co-apellido" class="block text-sm font-bold text-gray-700 mb-1">Apellido</label>
+                            <input type="text" id="co-apellido" required class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                    </div>
 
-    <div class="p-6 border-t bg-white shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
-        <div id="resumen-envio-global" class="flex justify-between items-center mb-2 text-sm text-gray-600 hidden">
-            <span id="resumen-envio-nombre">Envío</span>
-            <span class="font-bold text-gray-800" id="resumen-envio-costo">$0</span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="co-email" class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                            <input type="email" id="co-email" required class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                        <div>
+                            <label for="co-telefono" class="block text-sm font-bold text-gray-700 mb-1">Teléfono</label>
+                            <input type="tel" id="co-telefono" required class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div id="co-dni-wrapper" class="hidden">
+                        <label for="co-dni" class="block text-sm font-bold text-gray-700 mb-1">DNI</label>
+                        <input type="text" id="co-dni" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                        <p class="text-xs text-gray-500 mt-1">OCA lo solicita para identificar al destinatario del envío.</p>
+                    </div>
+
+                    <div id="co-direccion-wrapper" class="hidden space-y-4 pt-4 border-t border-gray-100">
+                        <h3 class="text-sm font-bold text-gray-800">Dirección de entrega</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="col-span-2">
+                                <label for="co-calle" class="block text-sm font-bold text-gray-700 mb-1">Calle</label>
+                                <input type="text" id="co-calle" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div>
+                                <label for="co-numero" class="block text-sm font-bold text-gray-700 mb-1">Número</label>
+                                <input type="text" id="co-numero" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="co-piso" class="block text-sm font-bold text-gray-700 mb-1">Piso/Depto (opcional)</label>
+                                <input type="text" id="co-piso" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div>
+                                <label for="co-localidad" class="block text-sm font-bold text-gray-700 mb-1">Localidad</label>
+                                <input type="text" id="co-localidad" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="co-provincia" class="block text-sm font-bold text-gray-700 mb-1">Provincia</label>
+                                <select id="co-provincia" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
+                                    <option value="">Seleccioná...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="co-cp" class="block text-sm font-bold text-gray-700 mb-1">Código Postal</label>
+                                <input type="text" id="co-cp" readonly class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-100 outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 pt-4 border-t border-gray-100">
+                        <h3 class="text-sm font-bold text-gray-800 mb-1">Método de pago</h3>
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-colors">
+                            <input type="radio" name="metodo-pago" value="transferencia" checked class="w-4 h-4 text-brand-500 focus:ring-brand-500 cursor-pointer">
+                            <span class="text-sm font-semibold text-gray-800">Transferencia / Depósito bancario</span>
+                        </label>
+                        <label id="co-metodo-efectivo-wrapper" class="hidden flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-colors">
+                            <input type="radio" name="metodo-pago" value="efectivo" class="w-4 h-4 text-brand-500 focus:ring-brand-500 cursor-pointer">
+                            <span class="text-sm font-semibold text-gray-800">Efectivo (al retirar en el local)</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="co-observaciones" class="block text-sm font-bold text-gray-700 mb-1">Observaciones (opcional)</label>
+                        <textarea id="co-observaciones" rows="2" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none resize-none"></textarea>
+                    </div>
+
+                    <p id="checkout-error" class="text-sm text-red-500 font-semibold hidden"></p>
+
+                    <button type="submit" id="btn-confirmar-pedido" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50">
+                        Confirmar pedido
+                    </button>
+                    <p class="text-xs text-center text-gray-500">Pronto vas a poder pagar online con Mercado Pago.</p>
+                </form>
+            </div>
         </div>
-        <div class="flex justify-between items-center mb-6">
-            <span class="font-bold text-gray-500 text-lg">Total estimado:</span>
-            <span class="text-3xl font-black text-brand-900">$<span id="total-carrito">0</span></span>
-        </div>
-        <button id="btn-pagar" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-500/50 hidden">Finalizar Compra</button>
-    </div>
-</aside>
+    </main>
+
+    <!-- Contenedor del Carrito Dinámico -->
+    <div id="cart-container"></div>
+
+    <!-- Contenedor del Footer Dinámico -->
+    <div id="footer-container" class="mt-auto w-full"></div>
+
+    <!-- Contenedor del WhatsApp Dinámico -->
+    <div id="whatsapp-container"></div>
+
+    <!-- App Scripts Centralizados -->
+    <script type="module" src="./js/app.js"></script>
+</body>
+</html>

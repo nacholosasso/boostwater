@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "boostwaterarg",
     "public": "public",
     "predeploy": [
       "npx tailwindcss -i ./src/input.css -o ./public/css/style.css"
@@ -9,5 +10,19 @@
       "**/.*",
       "**/node_modules/**"
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
 }
